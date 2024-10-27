@@ -6,7 +6,8 @@ import { useFonts } from 'expo-font';
 import { Lobster_400Regular } from '@expo-google-fonts/lobster';
 import { Roboto_400Regular } from '@expo-google-fonts/roboto';
 import * as SplashScreen from 'expo-splash-screen';
-import { loginStyles } from '../styles/login';
+import { loginStyles } from '../src/styles/login';
+import { Link } from 'expo-router';
 
 SplashScreen.preventAutoHideAsync(); // Para manter a tela de splash até as fontes carregarem
 
@@ -31,7 +32,7 @@ export default function App() {
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
     >
-      <Image style={loginStyles.logoStyle} source={require('../../assets/logo.png')} />
+      <Image style={loginStyles.logoStyle} source={require('../assets/logo.png')} />
       <View style={loginStyles.textContainer}>
         <Text style={[loginStyles.uPetText, { fontFamily: 'Lobster_400Regular' }]}>
           U-Pet
@@ -54,7 +55,7 @@ export default function App() {
         secureTextEntry={true}  // para esconder a senha
       />
       <TouchableOpacity style={loginStyles.buttonStyle}><Text style={{color:'white'}}>Login</Text></TouchableOpacity>
-      <Text>Ainda nao possui uma conta?<Text style={{color:'blue'}} onPress={()=>console.log("oi")}> Cadastre-se</Text></Text>
+      <Text>Ainda nao possui uma conta?<Link style={{color:'blue'}} href={'/register'}> Cadastre-se</Link></Text>
       <StatusBar style="auto" />
 
     </LinearGradient>
