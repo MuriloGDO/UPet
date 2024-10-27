@@ -11,13 +11,9 @@ export const registerStyles = StyleSheet.create({
         alignItems: 'center',
       },
     logoStyle: {
-      marginTop: 120,
+      marginTop: 70,
       width:80,
       height:80
-    },
-    uPetText: {
-      fontSize: 22,
-      color: 'white',
     },
     input: {
       height: 40,
@@ -36,4 +32,34 @@ export const registerStyles = StyleSheet.create({
       // Sombra para Android
       elevation: 5,
     },
+    buttonsContainer:{
+      flexDirection:'row',
+      marginTop:0,
+      justifyContent:'center',
+      width:'100%'
+    },
+    buttonStyle: {
+      borderRadius:30,
+      marginTop:10,
+      marginBottom:30,
+      height:30,
+      width:130,
+      color:'white',
+      justifyContent:'center',
+      alignItems:'center',
+      // Sombra para iOS
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+      // Sombra para Android
+      elevation: 5,
+    },
+    blue:{
+      backgroundColor:'#02778E',
+    },
+    red:{
+      backgroundColor:'red',
+      marginRight:20
+    }
   });

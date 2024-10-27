@@ -52,7 +52,7 @@ export default function App() {
         placeholder="Digite aqui sua senha"
         value={text}
         onChangeText={setText}
-        secureTextEntry={true}  // para esconder a senha
+        secureTextEntry={true}  
       />
       <TouchableOpacity style={loginStyles.buttonStyle}><Text style={{color:'white'}}>Login</Text></TouchableOpacity>
       <Text>Ainda nao possui uma conta?<Link style={{color:'blue'}} href={'/register'}> Cadastre-se</Link></Text>
