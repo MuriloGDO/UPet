@@ -1,25 +1,37 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
+from django.contrib.auth.hashers import check_password
 from rest_framework import status
-from ...models import Users
+from ...models import Login
 import jwt, datetime
 
 class Login_view(APIView):
     def post(self, request):
         email = request.data["email"]
-        # password = request.data["password"]           //lembrar de descomentar quando já estiver implementado
+        password = request.data["password"]
+        # institution = 0
+        user = 0
         
-        user = Users.objects.filter(email=email).first()
+        login = Login.objects.filter(email=email).first()
 
-        if user is None:
-            raise AuthenticationFailed('User não foi encontrado.')
+        if login is None:
+            raise AuthenticationFailed('login não foi encontrado.')
         
-        # if not user.check_password(password):
-        #     raise AuthenticationFailed('Senha inválida')          //Fazer quando a logica da senha ja estiver implementada
+        if not check_password(password, login.password):
+            raise AuthenticationFailed('Senha inválida')      
+
+        if login.user is not None:
+            login_id = login.user_id
+            user = 1
+        # else:
+        #     login_id = login.institution
+        #     institution = 1
 
         payload = {
-            "id": user.id,
+            "id": login_id,
+            # "institution": institution,
+            "user": user,
             "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=60),
             "iat": datetime.datetime.now(datetime.timezone.utc)
         }
