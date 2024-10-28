@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const loginStyles = StyleSheet.create({
+export const sharedStyles = StyleSheet.create({
     buttonStyle: {
       borderRadius:30,
       marginTop:30,
@@ -13,23 +13,11 @@ export const loginStyles = StyleSheet.create({
       alignItems:'center',
       // Sombra para iOS
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
+      shadowOffset: { width: 2, height: 2 },
+      shadowOpacity: .8,
       shadowRadius: 3,
       // Sombra para Android
       elevation: 5,
-    },
-    container: {
-      flex: 1,
-      alignItems: 'center',
-    },
-    textContainer: {
-      marginTop: 20,
-      marginBottom: 30,
-      alignItems: 'center',
-    },
-    logoStyle: {
-      marginTop: 110,
     },
     uPetText: {
       fontSize: 42,
@@ -58,4 +46,24 @@ export const loginStyles = StyleSheet.create({
       // Sombra para Android
       elevation: 5,
     },
+    container: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    textContainer: {
+      marginTop: 20,
+      marginBottom: 30,
+      alignItems: 'center',
+    },
+    blue:{
+      backgroundColor:'#02778E',
+    },
+    red:{
+      backgroundColor:'red',
+      marginRight:20
+    },
+    inputLabels: {
+      alignSelf:'flex-start',
+      marginTop: 5,
+    }
   });

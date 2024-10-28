@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TextInput, Text } from 'react-native';
-import { userRegisterStyles } from './style';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store'
-import { setAdress, setBirth, setCpf, setDescription, setEmail, setName, setPassword, setPhone } from '../../../redux/slices/registerUserSlice';
-import { registerStyles } from '../../styles/register';
+import { RootState } from '../../redux/store'
+import { setAdress, setBirth, setCpf, setDescription, setEmail, setName, setPassword, setPhone } from '../../redux/slices/registerUserSlice';
+import { sharedStyles } from '../../app/styles/sharedStyle';
+import { registerUserInputsStyles } from './style';
 
 
 export const RegisterUserInput = () => {
@@ -20,65 +20,65 @@ export const RegisterUserInput = () => {
 
   return (
     <>
-      <Text style={userRegisterStyles.text}>Nome:</Text>
+      <Text style={sharedStyles.inputLabels}>Nome:</Text>
       <TextInput
-          style={userRegisterStyles.input}
+          style={[sharedStyles.input, registerUserInputsStyles.inputMargin]}
           placeholder="Digite aqui seu Nome"
           value={name}
           onChangeText={(name)=> dispatch(setName(name))}
         />
-      <Text style={userRegisterStyles.text}>Telefone:</Text>
+      <Text style={sharedStyles.inputLabels}>Telefone:</Text>
       <TextInput
-          style={userRegisterStyles.input}
+          style={[sharedStyles.input, registerUserInputsStyles.inputMargin]}
           placeholder="Digite aqui seu Telefone"
           value={phone}
           onChangeText={(phone)=> dispatch(setPhone(phone))}
         />
-      <Text style={userRegisterStyles.text}>Email:</Text>
+      <Text style={sharedStyles.inputLabels}>Email:</Text>
       <TextInput
-          style={userRegisterStyles.input}
+          style={[sharedStyles.input, registerUserInputsStyles.inputMargin]}
           placeholder="Digite aqui seu Email"
           value={email}
           onChangeText={(email)=> dispatch(setEmail(email))}
         />
-        <Text style={userRegisterStyles.text}>Data de nascimento:</Text>
+        <Text style={sharedStyles.inputLabels}>Data de nascimento:</Text>
       <TextInput
-          style={userRegisterStyles.input}
+          style={[sharedStyles.input, registerUserInputsStyles.inputMargin]}
           placeholder="Digite aqui sua Data de nascimento"
           value={birth}
           onChangeText={(birth)=> dispatch(setBirth(birth))}
         />
-      <Text style={userRegisterStyles.text}>Endereço:</Text>
+      <Text style={sharedStyles.inputLabels}>Endereço:</Text>
       <TextInput
-          style={userRegisterStyles.input}
+          style={[sharedStyles.input, registerUserInputsStyles.inputMargin]}
           placeholder="Digite aqui seu Enderço"
           value={adress}
           onChangeText={(adress)=> dispatch(setAdress(adress))}
         />
-        <Text style={userRegisterStyles.text}>Cpf:</Text>
+        <Text style={sharedStyles.inputLabels}>Cpf:</Text>
       <TextInput
-          style={userRegisterStyles.input}
+          style={[sharedStyles.input, registerUserInputsStyles.inputMargin]}
           placeholder="Digite aqui seu Cpf"
           value={cpf}
           onChangeText={(cpf)=> dispatch(setCpf(cpf))}
         />
-        <Text style={userRegisterStyles.text}>Foto:</Text>
+        <Text style={sharedStyles.inputLabels}>Foto:</Text>
       <TextInput
-          style={userRegisterStyles.input}
+          style={[sharedStyles.input, registerUserInputsStyles.inputMargin]}
           placeholder="Escolha uma foto"
           value={name}
           onChangeText={(name)=> dispatch(setName(name))}
         />
-        <Text style={userRegisterStyles.text}>Descrição:</Text>
+        <Text style={sharedStyles.inputLabels}>Descrição:</Text>
       <TextInput
-          style={userRegisterStyles.input}
+          style={[sharedStyles.input, registerUserInputsStyles.inputMargin]}
           placeholder="Faça uma breve descrição sobre sua casa, rotina e personalidade"
           value={description}
           onChangeText={(description)=> dispatch(setDescription(description))}
         />
-        <Text style={userRegisterStyles.text}>Senha:</Text>
+        <Text style={sharedStyles.inputLabels}>Senha:</Text>
         <TextInput
-          style={userRegisterStyles.input}
+          style={[sharedStyles.input, registerUserInputsStyles.inputMargin]}
           placeholder="Crie uma senha"
           value={password}
           onChangeText={(password)=> dispatch(setPassword(password))}
