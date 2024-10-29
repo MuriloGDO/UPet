@@ -1,0 +1,1 @@
+from .views.test_Users_register import test_User_register
