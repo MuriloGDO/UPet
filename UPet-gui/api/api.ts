@@ -17,11 +17,10 @@ export const systemApiService = {
             })
         }catch(err){
             Alert.alert('Erro ao realizar login')
-            console.log(err)
         }
     },
     registerUser : async (name: string, telephone: string, email:string, 
-        dateOfBirth: string, address:string, cpf:string, photo: File|null, description: string, password: string) =>{
+        dateOfBirth: string, address:string, cpf:string, photo: string|undefined|null, description: string, password: string) =>{
         try{
             const formData = new FormData()
             formData.append('name', name)

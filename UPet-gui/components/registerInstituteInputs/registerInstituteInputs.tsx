@@ -19,28 +19,28 @@ export const RegisterInstituteInput = () => {
       <Text style={sharedStyles.inputLabels}>Nome:</Text>
       <TextInput
           style={sharedStyles.input}
-          placeholder="Digite aqui seu Nome"
+          placeholder="Nome da instituição"
           value={name}
           onChangeText={(name)=> dispatch(setName(name))}
         />
       <Text style={sharedStyles.inputLabels}>Telefone:</Text>
       <TextInput
           style={sharedStyles.input}
-          placeholder="Digite aqui seu Telefone"
+          placeholder="Telefone"
           value={phone}
           onChangeText={(phone)=> dispatch(setPhone(phone))}
         />
       <Text style={sharedStyles.inputLabels}>Email:</Text>
       <TextInput
           style={sharedStyles.input}
-          placeholder="Digite aqui seu Email"
+          placeholder="Email da instituição"
           value={email}
           onChangeText={(email)=> dispatch(setEmail(email))}
         />
       <Text style={sharedStyles.inputLabels}>Endereço:</Text>
       <TextInput
           style={sharedStyles.input}
-          placeholder="Digite aqui seu Enderço"
+          placeholder="Enderço da instituição"
           value={address}
           onChangeText={(address)=> dispatch(setaddress(address))}
         />

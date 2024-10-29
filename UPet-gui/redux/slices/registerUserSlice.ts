@@ -7,7 +7,7 @@ interface userForm {
   birth: string
   address: string
   cpf: string
-  photo: File | null
+  photo: string | undefined | null
   description: string
   password: string
 }
@@ -19,7 +19,7 @@ const initialState: userForm = {
     birth: '',
     address: '',
     cpf: '',
-    photo: null,
+    photo: '',
     description: '',
     password:''
 }
@@ -46,7 +46,7 @@ const registerUserSlice = createSlice({
     setCpf(state, action: PayloadAction<string>) {
         state.cpf = action.payload
     },
-    setPhoto(state, action: PayloadAction<File>) {
+    setPhoto(state, action: PayloadAction<string | undefined | null>) {
         state.photo = action.payload
     },
     setDescription(state, action: PayloadAction<string>) {
