@@ -4,7 +4,7 @@ interface instituteForm {
   cnpj: string
   name: string
   phone: string
-  adress: string
+  address: string
   email: string
   password: string
 }
@@ -13,7 +13,7 @@ const initialState: instituteForm = {
     cnpj: '',
     name: '',
     phone: '',
-    adress: '',
+    address: '',
     email: '',
     password: ''
 }
@@ -31,8 +31,8 @@ const registerInstituteSlice = createSlice({
     setEmail(state, action: PayloadAction<string>) {
         state.email = action.payload
     },
-    setAdress(state, action: PayloadAction<string>) {
-        state.adress = action.payload
+    setaddress(state, action: PayloadAction<string>) {
+        state.address = action.payload
     },
     setPassword(state, action: PayloadAction<string>) {
       state.password = action.payload
@@ -40,5 +40,5 @@ const registerInstituteSlice = createSlice({
   },
 })
 
-export const { setName, setAdress, setPhone, setEmail, setPassword } = registerInstituteSlice.actions
+export const { setName, setaddress, setPhone, setEmail, setPassword } = registerInstituteSlice.actions
 export default registerInstituteSlice.reducer

@@ -5,7 +5,7 @@ interface userForm {
   phone: string
   email: string
   birth: string
-  adress: string
+  address: string
   cpf: string
   photo: File | null
   description: string
@@ -17,7 +17,7 @@ const initialState: userForm = {
     phone: '',
     email: '',
     birth: '',
-    adress: '',
+    address: '',
     cpf: '',
     photo: null,
     description: '',
@@ -40,8 +40,8 @@ const registerUserSlice = createSlice({
     setBirth(state, action: PayloadAction<string>) {
         state.birth = action.payload
     },
-    setAdress(state, action: PayloadAction<string>) {
-        state.adress = action.payload
+    setaddress(state, action: PayloadAction<string>) {
+        state.address = action.payload
     },
     setCpf(state, action: PayloadAction<string>) {
         state.cpf = action.payload
@@ -58,5 +58,5 @@ const registerUserSlice = createSlice({
   },
 })
 
-export const { setName, setAdress, setPhone, setEmail, setBirth, setCpf, setPhoto, setDescription, setPassword } = registerUserSlice.actions
+export const { setName, setaddress, setPhone, setEmail, setBirth, setCpf, setPhoto, setDescription, setPassword } = registerUserSlice.actions
 export default registerUserSlice.reducer

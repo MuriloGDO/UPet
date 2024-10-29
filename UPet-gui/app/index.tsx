@@ -7,13 +7,17 @@ import { Lobster_400Regular } from '@expo-google-fonts/lobster';
 import { Roboto_400Regular } from '@expo-google-fonts/roboto';
 import * as SplashScreen from 'expo-splash-screen';
 import { loginStyles } from './styles/login';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { sharedStyles } from './styles/sharedStyle';
+import { systemApiService } from '../api/api';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const [text, setText] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const router = useRouter();
 
   const [fontsLoaded] = useFonts({
     Lobster_400Regular,
@@ -24,6 +28,10 @@ export default function App() {
     return null; 
   } else {
     SplashScreen.hideAsync(); 
+  }
+
+  const handleLogin = async () =>{
+    await systemApiService.login(email, password).then(() => router.push('/'))
   }
 
   return (
@@ -45,17 +53,17 @@ export default function App() {
       <TextInput
         style={sharedStyles.input}
         placeholder="Digite aqui seu email"
-        value={text}
-        onChangeText={setText}
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         style={sharedStyles.input}
         placeholder="Digite aqui sua senha"
-        value={text}
-        onChangeText={setText}
+        value={password}
+        onChangeText={setPassword}
         secureTextEntry={true}  
       />
-      <TouchableOpacity style={sharedStyles.buttonStyle}><Text style={{color:'white'}}>Login</Text></TouchableOpacity>
+      <TouchableOpacity onPress={handleLogin} style={sharedStyles.buttonStyle}><Text style={{color:'white'}}>Login</Text></TouchableOpacity>
       <Text>Ainda nao possui uma conta?<Link style={{color:'blue'}} href={'/options'}> Cadastre-se</Link></Text>
       <StatusBar style="auto" />
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { TextInput, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store'
-import { setAdress, setBirth, setCpf, setDescription, setEmail, setName, setPassword, setPhone } from '../../redux/slices/registerUserSlice';
+import { setaddress, setBirth, setCpf, setDescription, setEmail, setName, setPassword, setPhone } from '../../redux/slices/registerUserSlice';
 import { sharedStyles } from '../../app/styles/sharedStyle';
 import { registerUserInputsStyles } from './style';
 
@@ -13,7 +13,7 @@ export const RegisterUserInput = () => {
   const email = useSelector((state: RootState) => state.registerUser.email)
   const phone = useSelector((state: RootState) => state.registerUser.phone)
   const birth = useSelector((state: RootState) => state.registerUser.birth)
-  const adress = useSelector((state: RootState) => state.registerUser.adress)
+  const address = useSelector((state: RootState) => state.registerUser.address)
   const cpf = useSelector((state: RootState) => state.registerUser.cpf)
   const description = useSelector((state: RootState) => state.registerUser.description)
   const password = useSelector((state: RootState) => state.registerUser.password)
@@ -52,8 +52,8 @@ export const RegisterUserInput = () => {
       <TextInput
           style={[sharedStyles.input, registerUserInputsStyles.inputMargin]}
           placeholder="Digite aqui seu Enderço"
-          value={adress}
-          onChangeText={(adress)=> dispatch(setAdress(adress))}
+          value={address}
+          onChangeText={(address)=> dispatch(setaddress(address))}
         />
         <Text style={sharedStyles.inputLabels}>Cpf:</Text>
       <TextInput

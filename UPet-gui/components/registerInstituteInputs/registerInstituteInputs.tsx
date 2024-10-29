@@ -2,7 +2,7 @@ import React from 'react';
 import { TextInput, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store'
-import { setAdress, setEmail, setName, setPassword, setPhone } from '../../redux/slices/registerInstituteSlice';
+import { setaddress, setEmail, setName, setPassword, setPhone } from '../../redux/slices/registerInstituteSlice';
 import { sharedStyles } from '../../app/styles/sharedStyle';
 
 
@@ -11,7 +11,7 @@ export const RegisterInstituteInput = () => {
   const name = useSelector((state: RootState) => state.registerInstitute.name)
   const email = useSelector((state: RootState) => state.registerInstitute.email)
   const phone = useSelector((state: RootState) => state.registerInstitute.phone)
-  const adress = useSelector((state: RootState) => state.registerInstitute.adress)
+  const address = useSelector((state: RootState) => state.registerInstitute.address)
   const password = useSelector((state: RootState) => state.registerInstitute.password)
 
   return (
@@ -41,8 +41,8 @@ export const RegisterInstituteInput = () => {
       <TextInput
           style={sharedStyles.input}
           placeholder="Digite aqui seu Enderço"
-          value={adress}
-          onChangeText={(adress)=> dispatch(setAdress(adress))}
+          value={address}
+          onChangeText={(address)=> dispatch(setaddress(address))}
         />
         <Text style={sharedStyles.inputLabels}>Senha:</Text>
         <TextInput

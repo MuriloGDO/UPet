@@ -5,7 +5,7 @@ import { store } from '../redux/store';
 
 export default function HomeLayout() {
   return (
-    <Provider store={store}>
+    <Provider store={store} children={undefined}>
       <Slot />
     </Provider>
 );
