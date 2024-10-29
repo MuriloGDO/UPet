@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from .Clusters import Clusters
 
 class Users(models.Model):
@@ -10,7 +11,7 @@ class Users(models.Model):
     cpf = models.CharField(max_length=30)
     photo = models.ImageField(upload_to='users_picture/', blank=True, null=True)
     description = models.CharField(max_length=500)
-    cluster = models.ForeignKey(Clusters, on_delete=models.CASCADE, related_name='usuarios')
+    cluster = models.ForeignKey(Clusters, on_delete=models.CASCADE, related_name='usuarios', blank=True, null=True)
     password = models.CharField(max_length=128, blank=False, null=False)
 
     # Método save para inferir o cluster do usuário
