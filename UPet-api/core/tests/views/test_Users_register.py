@@ -23,19 +23,22 @@ class test_User_register(APITestCase):
 
     def test_create_user_successfully(self):
         response = self.client.post(self.url, self.user_data, format='json')
-        
+
         # Verificações de resposta e criação de usuário e login
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Users.objects.count(), 1)
         self.assertEqual(Login.objects.count(), 1)
-        
-        # Verificar se o usuário foi criado com o e-mail correto e senha hashada
-        user = Users.objects.get(name=self.user_data['name'])
-        self.assertEqual(user.email, self.user_data['email'])
-        self.assertTrue(check_password(self.user_data['password'], user.password))
 
-    def test_create_user_with_invalid_data(self):
-        # Teste de criação com dados inválidos (email incorreto)
+        # Verificar se o usuário foi criado com as informações certas
+        user = Users.objects.get(email=self.user_data['email'])
+        self.assertEqual(user.name, self.user_data['name'])
+        self.assertTrue(check_password(self.user_data['password'], user.password))
+        self.assertEqual(user.telephone, self.user_data['telephone'])
+        self.assertEqual(user.cpf, self.user_data['cpf'])
+        self.assertEqual(user.description, self.user_data['description'])
+        self.assertEqual(user.cluster.id, self.cluster.id)
+
+    def test_create_user_with_invalid_email(self):
         invalid_data = self.user_data.copy()
         invalid_data['email'] = 'invalid'
         response = self.client.post(self.url, invalid_data, format='json')
@@ -45,13 +48,22 @@ class test_User_register(APITestCase):
         self.assertEqual(Users.objects.count(), 0)
         self.assertEqual(Login.objects.count(), 0)
 
-    def test_login_creation_failure_rolls_back_user_creation(self):
-        # Teste de falha na criação do login com senha inválida
-        invalid_password_data = self.user_data.copy()
-        invalid_password_data['email'] = 'invalid'
-        response = self.client.post(self.url, invalid_password_data, format='json')
+    def test_create_user_with_empty_password(self):
+        invalid_data = self.user_data.copy()
+        invalid_data['password'] = ''
+        response = self.client.post(self.url, invalid_data, format='json')
 
-        # Verifica rollback do usuário em caso de falha de login
+        # Verifica erro 400 e ausência de criação de usuário/login
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(Users.objects.count(), 0)
         self.assertEqual(Login.objects.count(), 0)
+
+    def test_create_user_without_cluster(self):
+        invalid_data = self.user_data.copy()
+        invalid_data['cluster'] = None
+        response = self.client.post(self.url, invalid_data, format='json')
+
+        # Verifica erro 400 e ausência de criação de usuário/login
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Users.objects.count(), 1)
+        self.assertEqual(Login.objects.count(), 1)
