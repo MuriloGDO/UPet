@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, Image, View, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { registerStyles } from './styles/register';
-import { RegisterUserInput } from '../components/registerUserInputs/registerUserInputs';
+import { RegisterUserInput1, RegisterUserInput2 } from '../components/registerUserInputs/registerUserInputs';
 import { useRouter } from 'expo-router';
 import { sharedStyles } from './styles/sharedStyle';
 import { systemApiService } from '../api/api';
@@ -11,6 +11,7 @@ import { RootState } from '../redux/store';
 
 
 export default function App() {
+  const[step, setStep] = useState<number>(1)
 
   const router = useRouter();
 
@@ -40,17 +41,38 @@ export default function App() {
       end={{ x: 0, y: 1 }}
     >
 
-      <Image style={registerStyles.logoStyle} source={require('../assets/logo.png')} />
+      
       <View style={sharedStyles.textContainer}>
-        <RegisterUserInput/>
+        {step == 1 ?
+          <>
+          <Image style={registerStyles.logoStyle} source={require('../assets/logo.png')} />
+          <RegisterUserInput1/>
+          </>
+          :
+          <RegisterUserInput2/>
+        }
+        
       </View>
       <View style={registerStyles.buttonsContainer}>
-          <TouchableOpacity onPress={()=>handleBack()} style={[sharedStyles.buttonStyle, sharedStyles.red, registerStyles.buttonsMargin]}>
+          {step == 1 ? 
+          <>
+            <TouchableOpacity onPress={()=>handleBack()} style={[sharedStyles.buttonStyle, sharedStyles.red, registerStyles.buttonsMargin]}>
             <Text style={{color:'white'}}>Voltar</Text>
-          </TouchableOpacity>
-        <TouchableOpacity style={[sharedStyles.buttonStyle, sharedStyles.blue, registerStyles.buttonsMargin]}>
-          <Text onPress={handleRegisterUser} style={{color:'white'}}>Cadastrar</Text>
-        </TouchableOpacity>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>setStep(2)} style={[sharedStyles.buttonStyle, sharedStyles.blue, registerStyles.buttonsMargin]}>
+            <Text style={{color:'white'}}>Próximo</Text>
+            </TouchableOpacity>
+          </>
+          :
+          <>
+            <TouchableOpacity onPress={()=>setStep(1)} style={[sharedStyles.buttonStyle, sharedStyles.red, registerStyles.buttonsMargin]}>
+            <Text style={{color:'white'}}>Voltar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleRegisterUser} style={[sharedStyles.buttonStyle, sharedStyles.blue, registerStyles.buttonsMargin]}>
+              <Text style={{color:'white'}}>Cadastrar</Text>
+            </TouchableOpacity>
+          </>
+         }
       </View>
     </LinearGradient>
   );
