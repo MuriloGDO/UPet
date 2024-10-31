@@ -36,13 +36,18 @@ Abra http://localhost:8000.
 
 1. Entre na pasta UPet-gui.
 
-2. Rode o comando npm install.
+2. Rode o comando.
+```bash
+npm install
+```
 
-3. Após a instalaçao das dependencias, rode o comando npx expo start e escolha qual dispositivo rodar a applicaçao.
-
+3. Após a instalaçao das dependencias, rode o comando e escolha qual dispositivo rodar a applicaçao.
+```bash
+npx expo start
+```
 ### Utilizaçao do banco de dados de desenvolvimento(dev_database.yml)
 
-1. Certifique-se que o docker o docker desktop está instalado e configurado no seu pc.
+1. Certifique-se que o docker ou docker desktop está instalado e configurado no seu pc.
 
 2. Crie a imagem e o container do banco de dados no seu terminal rodando o comando 
 
