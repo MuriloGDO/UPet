@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { Alert } from 'react-native'
 
-export const baseUrl = 'http://localhost:8000'
+export const baseUrl = 'http://localhost:8000/'
 export const api = axios.create({
-  baseURL: `${baseUrl}:8000/api/`,
+  baseURL: `${baseUrl}api/`,
 })
 
 export const systemApiService = {
@@ -12,9 +12,10 @@ export const systemApiService = {
             const formData = new FormData()
             formData.append('email', email)
             formData.append('password', password)
-            await api.post('/login', formData, {
+            const response = await api.post('/login/', formData, {
                 responseType:'json'
             })
+            Alert.alert('Login realizado com sucesso')
         }catch(err){
             Alert.alert('Erro ao realizar login')
         }
@@ -32,9 +33,10 @@ export const systemApiService = {
             formData.append('description', description)
             formData.append('password', password)
             photo ? formData.append('photo', photo) : undefined
-            await api.post('/login', formData, {
+            await api.post('/user_register/', formData, {
                 responseType:'json'
             })
+            Alert.alert('Usuário criado com sucesso')
         }catch(err){
             Alert.alert('Erro ao registrar usuário')
         }

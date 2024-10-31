@@ -4,13 +4,12 @@ from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from ...services import User_register_service
 from ...exceptions import Rollback_exception, User_creation_exception
+from datetime import datetime
 
 class Users_register(APIView):
     def post(self, request):
         user_data = request.data.copy()
-
-        if 'photo' in request.FILES:
-            user_data['photo'] = request.FILES['photo']
+        user_data['date_of_birth'] = datetime.strptime(user_data['date_of_birth'], "%d/%m/%Y").date()
 
         try:
             user, user_serializer = User_register_service.create_user(user_data)

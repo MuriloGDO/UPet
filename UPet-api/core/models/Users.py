@@ -9,7 +9,7 @@ class Users(models.Model):
     date_of_birth = models.DateField()
     address = models.CharField(max_length=150)
     cpf = models.CharField(max_length=30)
-    photo = models.ImageField(upload_to='users_picture/', blank=True, null=True)
+    photo = models.TextField(blank=True, null=True)
     description = models.CharField(max_length=500)
     cluster = models.ForeignKey(Clusters, on_delete=models.CASCADE, related_name='usuarios', blank=True, null=True)
     password = models.CharField(max_length=128, blank=False, null=False, default='')
