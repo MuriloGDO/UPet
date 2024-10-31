@@ -49,7 +49,7 @@ npx expo start
 
 1. Certifique-se que o docker ou docker desktop está instalado e configurado no seu pc.
 
-2. Crie a imagem e o container do banco de dados no seu terminal rodando o comando 
+2. Crie a imagem e o container do banco de dados no seu terminal rodando o comando dentro da pasta UPet-api 
 
 ```bash
     docker compose -f dev_database.yml up -d
