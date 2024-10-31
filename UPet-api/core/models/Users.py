@@ -12,7 +12,7 @@ class Users(models.Model):
     photo = models.ImageField(upload_to='users_picture/', blank=True, null=True)
     description = models.CharField(max_length=500)
     cluster = models.ForeignKey(Clusters, on_delete=models.CASCADE, related_name='usuarios', blank=True, null=True)
-    password = models.CharField(max_length=128, blank=False, null=False)
+    password = models.CharField(max_length=128, blank=False, null=False, default='')
 
     # Método save para inferir o cluster do usuário
     def save(self, *args, **kwargs):
