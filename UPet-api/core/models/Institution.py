@@ -7,3 +7,4 @@ class Institution(models.Model):
     telephone = models.CharField(max_length=20)
     address = models.CharField(max_length=100)
     email = models.EmailField(max_length=100, unique=True)
+    password = models.CharField(max_length=128, blank=False, null=False, default='')
