@@ -3,6 +3,8 @@ from rest_framework import status
 from django.urls import reverse
 from ...models import Users, Login, Clusters
 from django.contrib.auth.hashers import check_password
+from unittest.mock import patch
+from ...exceptions import Rollback_exception
 
 class test_User_register(APITestCase):
     def setUp(self):
@@ -11,7 +13,7 @@ class test_User_register(APITestCase):
             'name': 'Test User',
             'telephone': '(11) 987654321',
             'email': 'testuser@example.com',
-            'date_of_birth': '2002-06-21',
+            'date_of_birth': '21/04/2001',
             'address': 'Rua Unifesp, 400 - Faculdade',
             'cpf': '987.654.321-09',
             'photo': None,
@@ -67,3 +69,13 @@ class test_User_register(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Users.objects.count(), 1)
         self.assertEqual(Login.objects.count(), 1)
+    
+    @patch('core.services.User_register_service.User_register_service.create_login')
+    def test_create_user_with_login_failure(self, mock_create_login):
+        mock_create_login.side_effect = Rollback_exception("Erro ao criar login")
+
+        response = self.client.post(self.url, self.user_data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(Users.objects.count(), 0)
+        self.assertEqual(Login.objects.count(), 0)
