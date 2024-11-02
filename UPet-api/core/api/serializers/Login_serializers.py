@@ -5,4 +5,4 @@ class Login_model_serializer(serializers.ModelSerializer):
     class Meta:
         model = Login
         # fields = ('id', 'user', 'institution', 'email', 'password')
-        fields = ('id', 'user', 'email', 'password')
+        fields = ('id', 'user', 'institution', 'email', 'password')
