@@ -6,6 +6,10 @@ export const api = axios.create({
   baseURL: `${baseUrl}api/`,
 })
 
+interface ErrorResponse {
+    response: { data: {error: string} };
+}
+
 export const systemApiService = {
     login : async (email: string, password: string) =>{
         try{
@@ -16,8 +20,10 @@ export const systemApiService = {
                 responseType:'json'
             })
             Alert.alert('Login realizado com sucesso')
-        }catch(err){
-            Alert.alert('Erro ao realizar login')
+            return response.data.data
+        }catch(err) {
+            const error = err as ErrorResponse;
+            Alert.alert(error.response.data.error);
         }
     },
     registerUser : async (name: string, telephone: string, email:string, 
@@ -37,8 +43,9 @@ export const systemApiService = {
                 responseType:'json'
             })
             Alert.alert('Usuário criado com sucesso')
-        }catch(err){
-            Alert.alert('Erro ao registrar usuário')
+        }catch(err) {
+            const error = err as ErrorResponse;
+            Alert.alert(error.response.data.error);
         }
     }
 }
