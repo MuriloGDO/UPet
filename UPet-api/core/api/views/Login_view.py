@@ -1,10 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
-from django.contrib.auth.hashers import check_password
 from rest_framework import status
 from ...services import Login_service
 from django.core.exceptions import ObjectDoesNotExist
+from ...models import Users
 
 class Login_view(APIView):
     def post(self, request):
@@ -15,17 +15,11 @@ class Login_view(APIView):
             login_id, user_type = Login_service.authenticate(email, password)
             token = Login_service.generate_token(login_id, user_type)
             if user_type["user"] == 1:
-                data = Login_service.get_user_info(login_id)
+                user = Users.find_by_id(login_id)
+                data = user.to_json()
             else:
                 data = Login_service.get_institution_info(login_id)
-            response = Response()
-            response.set_cookie(key='jwt', value=token, httponly=True)
-            response.data = {
-                'jwt': token,
-                'user': user_type["user"],
-                'institution': user_type["institution"],
-                'data': data
-            }
+            response = Login_service.get_response(token, user_type, data)
             return response
         except AuthenticationFailed as e:
             return Response(

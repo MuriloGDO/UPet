@@ -1,13 +1,15 @@
 from django.contrib.auth.hashers import check_password
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.response import Response
 from ..models import Login, Users, Institution
 import jwt, datetime
 from django.core.exceptions import ObjectDoesNotExist
+from ..classes import User
 
 class Login_service:
     @staticmethod
     def authenticate(email, password):
-        login = Login.objects.filter(email = email).first()
+        login = Login.find_by_email(email)
         if login is None:
             raise AuthenticationFailed('Login não foi encontrado.')
 
@@ -37,24 +39,6 @@ class Login_service:
         return token
     
     @staticmethod
-    def get_user_info(login_id):
-        if Users.objects.filter(id = login_id).exists():
-            user = Users.objects.get(id = login_id)
-            return {
-                "id": user.id,
-                "name": user.name,
-                "telephone": user.telephone,
-                "email": user.email,
-                "date_of_birth": user.date_of_birth,
-                "address": user.address,
-                "cpf": user.cpf,
-                "photo": user.photo,
-                "description": user.description,
-                "cluster": user.cluster.id if user.cluster else None
-            }
-        else:
-            raise ObjectDoesNotExist("Usuário com o ID especificado não foi encontrado.")
-    
     def get_institution_info(login_id):
         if Institution.objects.filter(id = login_id).exists():
             institution = Institution.objects.filter(id = login_id)
@@ -68,3 +52,15 @@ class Login_service:
             }
         else:
             raise ObjectDoesNotExist("Instituição com o ID especificado não foi encontrada.")
+        
+    @staticmethod 
+    def get_response(token, user_type, data):
+        response = Response()
+        response.set_cookie(key='jwt', value=token, httponly=True)
+        response.data = {
+            'jwt': token,
+            'user': user_type["user"],
+            'institution': user_type["institution"],
+            'data': data
+        }
+        return response
