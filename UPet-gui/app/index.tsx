@@ -10,14 +10,19 @@ import { loginStyles } from './styles/login';
 import { Link, useRouter } from 'expo-router';
 import { sharedStyles } from './styles/sharedStyle';
 import { systemApiService } from '../api/api';
+import { useDispatch } from 'react-redux';
+import { setBirth, setCpf, setaddress, setDescription, 
+      setEmail, setName, setPhone, setPhoto, setUserCluster, setUserId } from '../redux/slices/userInfoSlice';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const [email, setEmail] = useState('');
+  const [email, setMail] = useState('');
   const [password, setPassword] = useState('');
 
   const router = useRouter();
+
+  const dispatch = useDispatch()
 
   const [fontsLoaded] = useFonts({
     Lobster_400Regular,
@@ -31,7 +36,20 @@ export default function App() {
   }
 
   const handleLogin = async () =>{
-    await systemApiService.login(email, password).then(() => router.push('/'))
+    await systemApiService.login(email, password).then((response) => {
+      dispatch(setName(response.name))
+      dispatch(setBirth(response.date_of_birth))
+      dispatch(setCpf(response.cpf))
+      dispatch(setaddress(response.address))
+      dispatch(setDescription(response.description))
+      dispatch(setEmail(response.email))
+      dispatch(setPhone(response.telephone))
+      dispatch(setPhoto(response.photo))
+      dispatch(setUserCluster(response.cluster))
+      dispatch(setUserId(response.id))
+      router.push('/')
+    })
+
   }
 
   return (
@@ -54,7 +72,7 @@ export default function App() {
         style={sharedStyles.input}
         placeholder="Digite aqui seu email"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={setMail}
       />
       <TextInput
         style={sharedStyles.input}
