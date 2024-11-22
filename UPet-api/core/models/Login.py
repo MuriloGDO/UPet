@@ -11,3 +11,6 @@ class Login(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+
+    def find_by_email(email):
+        return Login.objects.filter(email = email).first()
