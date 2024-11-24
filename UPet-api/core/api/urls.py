@@ -1,5 +1,5 @@
 from rest_framework import routers
-from .views import Users_view_set, Clusters_view_set, Users_register, Login_view, Login_view_set, Users_delete
+from .views import Users_view_set, Clusters_view_set, Users_register, Login_view, Login_view_set, Users_delete, Users_update, Users_information, Pets_register
 from django.urls import path, include
 
 router = routers.DefaultRouter()
@@ -12,4 +12,7 @@ urlpatterns = [
     path('user_register/', Users_register.as_view(), name='user-register'),
     path('user_delete/', Users_delete.as_view(), name='user-delete'),
     path('login/', Login_view.as_view(), name='login'),
+    path('user_update/', Users_update.as_view(), name='user-update'),
+    path('user_information/', Users_information.as_view(), name='user-information'),
+    path('pet_register/', Pets_register.as_view(), name='pet-register'),
 ]

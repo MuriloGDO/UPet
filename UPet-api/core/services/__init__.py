@@ -1,3 +1,4 @@
 from .User_register_service import User_register_service
 from .User_delete_service import User_delete_service
+from .User_update_service import User_update_service
 from .Login_service import Login_service
