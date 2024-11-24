@@ -5,3 +5,4 @@ from .Pets_photos_serializers import Pets_photos_model_serializer
 from .Pets_serializers import Pets_model_serializer
 from .Institution_serializers import Institution_model_serializer
 from .Adoption_serializers import Adoption_model_serializer
+from .Register_pets_serializers import Register_pets_serializer
