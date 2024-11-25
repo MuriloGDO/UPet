@@ -9,8 +9,8 @@ class Institution_delete_service:
     @transaction.atomic 
     def delete_institution_and_login(institution_id):
         try:
-            institution = institution.objects.get(id=institution_id)
-            login = Login.objects.get(user=institution)
+            institution = Institution.objects.get(id=institution_id)
+            login = Login.objects.get(institution=institution)
             login.delete()
             institution.delete()
             

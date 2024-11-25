@@ -3,5 +3,5 @@ from .User_delete_service import User_delete_service
 from .User_update_service import User_update_service
 from .Login_service import Login_service
 from .Institution_update_service import Institution_update_service
-from .Intitution_delete_service import Institution_delete_service
+from .Institution_delete_service import Institution_delete_service
 from .Pets_update_service import Pets_update_service

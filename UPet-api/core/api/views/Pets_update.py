@@ -8,20 +8,14 @@ from ...services import Pets_update_service
 class Pets_update(APIView):
     def patch(self, request):
         pet_id = request.data.get('pet_id')
-        institution_id = request.data.get('institution_id')
         
-        if not pet_id or not institution_id:
-            return Response({"error": "Os IDs do pet e da instituição são obrigatórios."}, status=status.HTTP_400_BAD_REQUEST)
-        
-        try:
-            institution = Institution.objects.get(id=institution_id)
-        except Institution.DoesNotExist:
-            return Response({"error": "Instituição não encontrada."}, status=status.HTTP_404_NOT_FOUND)
+        if not pet_id:
+            return Response({"error": "O ID do pet é obrigatórios."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            pet = Pets.objects.get(id=pet_id, institution=institution)
+            pet = Pets.objects.get(id=pet_id)
         except Pets.DoesNotExist:
-            return Response({"error": "Pet não encontrado ou não pertence à instituição."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Pet não encontrado."}, status=status.HTTP_404_NOT_FOUND)
 
         data = request.data
 

@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from ...services import Intitution_delete_service
+from ...services import Institution_delete_service
 from ...exceptions import Rollback_exception
 
 class Institution_delete(APIView):
@@ -15,7 +15,7 @@ class Institution_delete(APIView):
             )
         
         try:
-            Intitution_delete_service.delete_institution_and_login(institution_id)
+            Institution_delete_service.delete_institution_and_login(institution_id)
             
             return Response(
                 {"message": "Usuário e login deletados com sucesso."},

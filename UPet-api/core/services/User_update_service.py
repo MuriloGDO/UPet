@@ -10,9 +10,6 @@ class User_update_service:
         password = data.get("password")
 
         if email or password:
-            if email and not email.endswith("@example.com"):
-                raise ValidationError({"error": "Email deve terminar com '@example.com'."})
-
             if password and password.strip() == "":
                 raise ValidationError({"error": "A senha não deve ser vazia."})
           
