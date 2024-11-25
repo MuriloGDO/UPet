@@ -7,3 +7,6 @@ from .Users_infomation import Users_information
 from .Login_view import Login_view
 from .Login_view_set import Login_view_set
 from .Pets_register import Pets_register
+from .Institution_delete import Institution_delete
+from .Institution_update import Institution_update
+from .Pets_update import Pets_update
