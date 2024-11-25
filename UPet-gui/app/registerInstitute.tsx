@@ -13,6 +13,10 @@ export default function App() {
     router.push('/options');
   };
 
+  const handleRegisterPet = () => {
+    router.push('/registerPet');
+  };
+
   return (
     <LinearGradient
       colors={['#02778E', '#90F9F3']}
@@ -28,13 +32,11 @@ export default function App() {
       <View style={registerStyles.buttonsContainer}>
           <TouchableOpacity onPress={()=>handleBack()} style={[sharedStyles.buttonStyle, sharedStyles.red, registerStyles.buttonsMargin]}>
             <Text style={{color:'white'}}>Voltar</Text>
-          </TouchableOpacity>
-        <TouchableOpacity style={[sharedStyles.buttonStyle, sharedStyles.blue, registerStyles.buttonsMargin]}>
-          <Text style={{color:'white'}}>Cadastrar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleRegisterPet} style={[sharedStyles.buttonStyle, sharedStyles.blue, registerStyles.buttonsMargin]}>
+          <Text style={{ color: 'white' }}>Cadastrar</Text>
         </TouchableOpacity>
       </View>
     </LinearGradient>
   );
 }
-
-

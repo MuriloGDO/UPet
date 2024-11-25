@@ -47,5 +47,23 @@ export const systemApiService = {
             const error = err as ErrorResponse;
             Alert.alert(error.response.data.error);
         }
+    },
+    registerPet: async (name: string, description: string, species: string,
+        date_of_birth: string, photo: string|undefined|null) =>{
+        try{
+            const formData = new FormData()
+            formData.append('name', name)
+            formData.append('description', description)
+            formData.append('species', species)
+            formData.append('date_of_birth', date_of_birth)
+            photo ? formData.append('photo', photo) : undefined
+            await api.post('/pet_register/', formData, {
+                responseType:'json'
+            })
+            Alert.alert('Pet criado com sucesso')
+        }catch(err) {
+            const error = err as ErrorResponse;
+            Alert.alert(error.response.data.error);
+        }
     }
 }
