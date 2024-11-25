@@ -1,5 +1,6 @@
 from .Users_view_set import Users_view_set
 from .Clusters_view_set import Clusters_view_set
+from .Institution_view_set import Intitution_view_set
 from .Users_register import Users_register
 from .Users_delete import Users_delete
 from .Users_update import Users_update
