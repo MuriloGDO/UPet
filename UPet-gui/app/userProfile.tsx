@@ -4,8 +4,10 @@ import { Footer } from '../components/footer';
 import { pickImage } from './utils/getPhotos';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { setaddress, setDescription, setEmail, setName, setPhone, setPhoto } from '../redux/slices/editUserSlice';
+import { setEditaddress, setEditDescription, setEditEmail, setEditName, setEditPhone, setEditPhoto } from '../redux/slices/editUserSlice';
 import { useDispatch } from 'react-redux';
+import { systemApiService } from '../api/api';
+import { setaddress, setDescription, setEmail, setName, setPhone, setPhoto } from '../redux/slices/userInfoSlice';
 
 
 export default function UserProfile() {
@@ -16,15 +18,26 @@ export default function UserProfile() {
   const phoneCopy = useSelector((state: RootState) => state.userInfo.telephone)
   const addressCopy = useSelector((state: RootState) => state.userInfo.address)
   const descriptionCopy = useSelector((state: RootState) => state.userInfo.description)
+  const userId = useSelector((state: RootState) => state.userInfo.id)
 
   useEffect(()=>{
-    dispatch(setName(nameCopy))
-    dispatch(setPhoto(photoCopy))
-    dispatch(setPhone(phoneCopy))
-    dispatch(setEmail(emailCopy))
-    dispatch(setaddress(addressCopy))
-    dispatch(setDescription(descriptionCopy))
+    dispatch(setEditName(nameCopy))
+    dispatch(setEditPhoto(photoCopy))
+    dispatch(setEditPhone(phoneCopy))
+    dispatch(setEditEmail(emailCopy))
+    dispatch(setEditaddress(addressCopy))
+    dispatch(setEditDescription(descriptionCopy))
   }, [])
+
+  const onSave = async() =>{
+    const response = await systemApiService.editUser(photo, name, email, phone, address, description, userId)
+    dispatch(setName(response.name))
+    dispatch(setaddress(response.address))
+    dispatch(setDescription(response.description))
+    dispatch(setEmail(response.email))
+    dispatch(setPhone(response.telephone))
+    dispatch(setPhoto(response.photo))
+  }
 
 
   const dispatch = useDispatch()
@@ -38,7 +51,7 @@ export default function UserProfile() {
 
   const handlePhotoChange = async () =>{
     const imageUri = await pickImage()
-    dispatch(setPhoto(imageUri))
+    dispatch(setEditPhoto(imageUri))
   }
 
   return (
@@ -55,7 +68,7 @@ export default function UserProfile() {
       <TextInput
         style={styles.nameInput}
         value={name}
-        onChangeText={(name)=>dispatch(setName(name))}
+        onChangeText={(name)=>dispatch(setEditName(name))}
         placeholder="Nome do usuário"
         placeholderTextColor="#999"
       />
@@ -64,7 +77,7 @@ export default function UserProfile() {
       <TextInput
         style={styles.input}
         value={email}
-        onChangeText={(email)=>dispatch(setEmail(email))}
+        onChangeText={(email)=>dispatch(setEditEmail(email))}
         placeholder="Email"
         placeholderTextColor="#999"
         keyboardType="email-address"
@@ -74,7 +87,7 @@ export default function UserProfile() {
       <TextInput
         style={styles.input}
         value={phone}
-        onChangeText={(phone)=>dispatch(setPhone(phone))}
+        onChangeText={(phone)=>dispatch(setEditPhone(phone))}
         placeholder="Telefone"
         placeholderTextColor="#999"
         keyboardType="phone-pad"
@@ -84,7 +97,7 @@ export default function UserProfile() {
       <TextInput
         style={styles.input}
         value={address}
-        onChangeText={(address)=>dispatch(setaddress(address))}
+        onChangeText={(address)=>dispatch(setEditaddress(address))}
         placeholder="Endereço"
         placeholderTextColor="#999"
       />
@@ -93,14 +106,14 @@ export default function UserProfile() {
       <TextInput
         style={[styles.input, styles.descriptionInput]}
         value={description}
-        onChangeText={(description)=>dispatch(setDescription(description))}
+        onChangeText={(description)=>dispatch(setEditDescription(description))}
         placeholder="Descrição"
         placeholderTextColor="#999"
         multiline
       />
 
           {/* Botão de salvar (opcional, pode fazer algo mais funcional) */}
-          <TouchableOpacity style={styles.saveButton} onPress={() => Alert.alert('Salvo!', 'Dados atualizados!')}>
+          <TouchableOpacity style={styles.saveButton} onPress={() => onSave()}>
             <Text style={styles.saveButtonText}>Salvar</Text>
           </TouchableOpacity>
         </ScrollView>

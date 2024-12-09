@@ -47,7 +47,6 @@ export default function App() {
       dispatch(setPhoto(response.photo))
       dispatch(setUserCluster(response.cluster))
       dispatch(setUserId(response.id))
-      
     })
     router.push('/home')
   }

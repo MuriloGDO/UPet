@@ -22,26 +22,26 @@ const EditUserSlice = createSlice({
   name: 'EditUserSlice',
   initialState,
   reducers: {
-    setName(state, action: PayloadAction<string>) {
+    setEditName(state, action: PayloadAction<string>) {
         state.name = action.payload
     },
-    setEmail(state, action: PayloadAction<string>) {
+    setEditEmail(state, action: PayloadAction<string>) {
         state.email = action.payload
     },
-    setaddress(state, action: PayloadAction<string>) {
+    setEditaddress(state, action: PayloadAction<string>) {
         state.address = action.payload
     },
-    setPhoto(state, action: PayloadAction<string | undefined | null>) {
+    setEditPhoto(state, action: PayloadAction<string | undefined | null>) {
         state.photo = action.payload
     },
-    setDescription(state, action: PayloadAction<string>) {
+    setEditDescription(state, action: PayloadAction<string>) {
         state.description = action.payload
     },
-    setPhone(state, action: PayloadAction<string>) {
+    setEditPhone(state, action: PayloadAction<string>) {
         state.telephone = action.payload
     },
   },
 })
 
-export const { setName, setaddress, setPhone, setEmail, setPhoto, setDescription } = EditUserSlice.actions
+export const { setEditName, setEditaddress, setEditPhone, setEditEmail, setEditPhoto, setEditDescription } = EditUserSlice.actions
 export default EditUserSlice.reducer
