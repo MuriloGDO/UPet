@@ -2,6 +2,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework.exceptions import ValidationError
 from ..api.serializers import Users_model_serializer, Login_model_serializer
 from ..exceptions import Rollback_exception, User_creation_exception
+from core.maritalkapi import Maritalk
 
 class User_register_service:
     @staticmethod
@@ -9,7 +10,10 @@ class User_register_service:
         if not user_data.get('password') or user_data.get('password').strip() == "":
             raise User_creation_exception("A senha não pode ser vazia.")
         
+        
+        
         user_data['password'] = make_password(user_data.get('password'))
+        user_data['cluster'] = Maritalk.Maritalk.get_response(user_data.get('description'))
         user_serializer = Users_model_serializer(data=user_data)
 
         if not user_serializer.is_valid():

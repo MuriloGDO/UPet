@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
 from .Clusters import Clusters
 from ..classes import User
+from core.maritalkapi import Maritalk
 
 class Users(models.Model):
     name = models.CharField(max_length=100)
@@ -18,6 +19,7 @@ class Users(models.Model):
 
     # Método save para inferir o cluster do usuário
     def save(user, *args, **kwargs):
+        answer = Maritalk.Maritalk.get_response(user.description)
         # Adicione lógica personalizada aqui para definir o cluster do usuário
         super().save(*args, **kwargs) 
 
