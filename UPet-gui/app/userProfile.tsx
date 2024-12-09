@@ -1,56 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker'; // Importação necessária
-import { ImageLibraryOptions } from 'react-native-image-picker';
+import { Footer } from '../components/footer';
+import { pickImage } from './utils/getPhotos';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { setaddress, setDescription, setEmail, setName, setPhone, setPhoto } from '../redux/slices/editUserSlice';
+import { useDispatch } from 'react-redux';
 
 
 export default function UserProfile() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [description, setDescription] = useState('');
-  const [photo, setPhoto] = useState<string | null>(null);
-
   
-    const addPhoto = () => {
-    const options: ImageLibraryOptions = {
-        mediaType: 'photo',
-        maxWidth: 300,
-        maxHeight: 300,
-        quality: 1,
-    };
+  const photoCopy = useSelector((state: RootState) => state.userInfo.photo)
+  const nameCopy = useSelector((state: RootState) => state.userInfo.name)
+  const emailCopy = useSelector((state: RootState) => state.userInfo.email)
+  const phoneCopy = useSelector((state: RootState) => state.userInfo.telephone)
+  const addressCopy = useSelector((state: RootState) => state.userInfo.address)
+  const descriptionCopy = useSelector((state: RootState) => state.userInfo.description)
 
-    launchImageLibrary(options, (response) => {
-        if (response.didCancel) {
-        Alert.alert('Cancelado', 'Nenhuma foto foi selecionada.');
-        } else if (response.errorMessage) {
-        Alert.alert('Erro', response.errorMessage);
-        } else if (response.assets && response.assets.length > 0) {
-            const uri = response.assets[0]?.uri ?? null;
-            setPhoto(uri);
-        }
-    });
-    };
+  useEffect(()=>{
+    dispatch(setName(nameCopy))
+    dispatch(setPhoto(photoCopy))
+    dispatch(setPhone(phoneCopy))
+    dispatch(setEmail(emailCopy))
+    dispatch(setaddress(addressCopy))
+    dispatch(setDescription(descriptionCopy))
+  }, [])
+
+
+  const dispatch = useDispatch()
+
+  const photo = useSelector((state: RootState) => state.userEdit.photo)
+  const name = useSelector((state: RootState) => state.userEdit.name)
+  const email = useSelector((state: RootState) => state.userEdit.email)
+  const phone = useSelector((state: RootState) => state.userEdit.telephone)
+  const address = useSelector((state: RootState) => state.userEdit.address)
+  const description = useSelector((state: RootState) => state.userEdit.description)
+
+  const handlePhotoChange = async () =>{
+    const imageUri = await pickImage()
+    dispatch(setPhoto(imageUri))
+  }
 
   return (
+    <>
     <ScrollView style={styles.container}>
-      {/* Foto do usuário */}
       <View style={styles.photoContainer}>
-        {photo ? (
-          <Image source={{ uri: photo }} style={styles.photo} />
-        ) : (
-          <TouchableOpacity onPress={addPhoto} style={styles.addPhotoButton}>
-            <Text style={styles.addPhotoText}>Adicionar Foto</Text>
+          <TouchableOpacity onPress={()=>handlePhotoChange()}>
+            <Image style={styles.photo} 
+            source={photo ? { uri: `data:image/jpeg;base64,${photo}` } : require('../assets/user_not_found.jpeg')} />
           </TouchableOpacity>
-        )}
       </View>
 
       {/* Nome */}
       <TextInput
         style={styles.nameInput}
         value={name}
-        onChangeText={setName}
+        onChangeText={(name)=>dispatch(setName(name))}
         placeholder="Nome do usuário"
         placeholderTextColor="#999"
       />
@@ -59,7 +64,7 @@ export default function UserProfile() {
       <TextInput
         style={styles.input}
         value={email}
-        onChangeText={setEmail}
+        onChangeText={(email)=>dispatch(setEmail(email))}
         placeholder="Email"
         placeholderTextColor="#999"
         keyboardType="email-address"
@@ -69,7 +74,7 @@ export default function UserProfile() {
       <TextInput
         style={styles.input}
         value={phone}
-        onChangeText={setPhone}
+        onChangeText={(phone)=>dispatch(setPhone(phone))}
         placeholder="Telefone"
         placeholderTextColor="#999"
         keyboardType="phone-pad"
@@ -79,7 +84,7 @@ export default function UserProfile() {
       <TextInput
         style={styles.input}
         value={address}
-        onChangeText={setAddress}
+        onChangeText={(address)=>dispatch(setaddress(address))}
         placeholder="Endereço"
         placeholderTextColor="#999"
       />
@@ -88,25 +93,28 @@ export default function UserProfile() {
       <TextInput
         style={[styles.input, styles.descriptionInput]}
         value={description}
-        onChangeText={setDescription}
+        onChangeText={(description)=>dispatch(setDescription(description))}
         placeholder="Descrição"
         placeholderTextColor="#999"
         multiline
       />
 
-      {/* Botão de salvar (opcional, pode fazer algo mais funcional) */}
-      <TouchableOpacity style={styles.saveButton} onPress={() => Alert.alert('Salvo!', 'Dados atualizados!')}>
-        <Text style={styles.saveButtonText}>Salvar</Text>
-      </TouchableOpacity>
-    </ScrollView>
-  );
-}
+          {/* Botão de salvar (opcional, pode fazer algo mais funcional) */}
+          <TouchableOpacity style={styles.saveButton} onPress={() => Alert.alert('Salvo!', 'Dados atualizados!')}>
+            <Text style={styles.saveButtonText}>Salvar</Text>
+          </TouchableOpacity>
+        </ScrollView>
+        <Footer></Footer>
+        </>
+      );
+    }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     padding: 16,
+    marginTop:90
   },
   photoContainer: {
     alignItems: 'center',

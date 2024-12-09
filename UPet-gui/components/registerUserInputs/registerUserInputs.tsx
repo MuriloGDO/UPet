@@ -102,7 +102,7 @@ export const RegisterUserInput2 = () => {
         <Image style={registerUserInputsStyles.registerImageStyle} 
         source={photo ? { uri: `data:image/jpeg;base64,${photo}` } : require('../../assets/user_not_found.jpeg')} />
 
-        <TouchableOpacity onPress={handlePhotoChange} style={[sharedStyles.buttonStyle, registerUserInputsStyles.photoButtonStyle]}>
+        <TouchableOpacity onPress={()=>handlePhotoChange()} style={[sharedStyles.buttonStyle, registerUserInputsStyles.photoButtonStyle]}>
           <Text style={{color:'white'}}>{photo ? 'Trocar foto de perfil' : 'Escolha foto de perfil'}</Text>
         </TouchableOpacity>
         <Text style={[sharedStyles.inputLabels, {maxWidth:300, marginTop:30}]}>Escreva uma descriçao detalhada 

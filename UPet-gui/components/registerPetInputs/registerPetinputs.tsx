@@ -36,7 +36,7 @@ export const RegisterPetInput = () => {
         <Image style={registerPetInputsStyles.registerImageStyle} 
         source={photo ? { uri: `data:image/jpeg;base64,${photo}` } : require('../../assets/user_not_found.jpeg')} />
 
-        <TouchableOpacity onPress={handlePhotoChange} style={[sharedStyles.buttonStyle, registerPetInputsStyles.photoButtonStyle]}>
+        <TouchableOpacity onPress={()=>handlePhotoChange()} style={[sharedStyles.buttonStyle, registerPetInputsStyles.photoButtonStyle]}>
           <Text style={{color:'white'}}>{photo ? 'Trocar foto do pet' : 'Escolha foto do pet'}</Text>
         </TouchableOpacity>
         <TextInput
