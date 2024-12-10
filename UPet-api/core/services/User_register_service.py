@@ -2,7 +2,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework.exceptions import ValidationError
 from ..api.serializers import Users_model_serializer, Login_model_serializer
 from ..exceptions import Rollback_exception, User_creation_exception
-from core.maritalkapi import Maritalk
+from ..maritalkapi import Maritalk
 
 class User_register_service:
     @staticmethod
