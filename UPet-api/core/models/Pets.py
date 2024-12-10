@@ -9,7 +9,8 @@ class Pets(models.Model):
     species = models.CharField(max_length=30)
     description = models.CharField(max_length=500)
     status = models.CharField(max_length=30)
-    cluster = models.ForeignKey(Clusters, on_delete=models.CASCADE, related_name='pets', blank=True, null=True)
+    cluster = models.ManyToManyField(Clusters, related_name='pets')
+    # cluster = models.ForeignKey(Clusters, on_delete=models.CASCADE, related_name='pets', blank=True, null=True)
 
     # Método save para inferir o cluster do pet
     def save(self, *args, **kwargs):

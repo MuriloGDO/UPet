@@ -13,7 +13,8 @@ class Users(models.Model):
     cpf = models.CharField(max_length=30)
     photo = models.TextField(blank=True, null=True)
     description = models.CharField(max_length=500)
-    cluster = models.ForeignKey(Clusters, on_delete=models.CASCADE, related_name='usuarios', blank=True, null=True)
+    # cluster = models.ForeignKey(Clusters, on_delete=models.CASCADE, related_name='usuarios', blank=True, null=True)
+    cluster = models.ManyToManyField(Clusters, related_name='usuarios', blank=True)
     password = models.CharField(max_length=128, blank=False, null=False, default='')
 
     # Método save para inferir o cluster do usuário
