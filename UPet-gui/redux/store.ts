@@ -4,6 +4,7 @@ import registerInstituteSlice from './slices/registerInstituteSlice'
 import userInfoSlice from './slices/userInfoSlice'
 import registerPetSlice from './slices/registerPetSlice'
 import userEditSlice from './slices/editUserSlice'
+import UiSlice from './slices/uiSlice'
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
         userInfo: userInfoSlice,
         registerPet: registerPetSlice,
         userEdit: userEditSlice,
+        UiSlice: UiSlice,
     }
 });
 

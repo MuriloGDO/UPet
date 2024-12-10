@@ -13,6 +13,7 @@ import { systemApiService } from '../api/api';
 import { useDispatch } from 'react-redux';
 import { setBirth, setCpf, setaddress, setDescription, 
       setEmail, setName, setPhone, setPhoto, setUserCluster, setUserId } from '../redux/slices/userInfoSlice';
+import { setLoading } from '../redux/slices/uiSlice';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,6 +37,7 @@ export default function App() {
   }
 
   const handleLogin = async () =>{
+    dispatch(setLoading(true))
     await systemApiService.login(email, password).then((response) => {
       dispatch(setName(response.name))
       dispatch(setBirth(response.date_of_birth))
@@ -49,6 +51,7 @@ export default function App() {
       dispatch(setUserId(response.id))
     })
     router.push('/home')
+    dispatch(setLoading(false))
   }
 
   return (

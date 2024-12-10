@@ -8,6 +8,7 @@ import { setEditaddress, setEditDescription, setEditEmail, setEditName, setEditP
 import { useDispatch } from 'react-redux';
 import { systemApiService } from '../api/api';
 import { setaddress, setDescription, setEmail, setName, setPhone, setPhoto } from '../redux/slices/userInfoSlice';
+import { setLoading } from '../redux/slices/uiSlice';
 
 
 export default function UserProfile() {
@@ -30,6 +31,7 @@ export default function UserProfile() {
   }, [])
 
   const onSave = async() =>{
+    dispatch(setLoading(true))
     const response = await systemApiService.editUser(photo, name, email, phone, address, description, userId)
     dispatch(setName(response.name))
     dispatch(setaddress(response.address))
@@ -37,6 +39,8 @@ export default function UserProfile() {
     dispatch(setEmail(response.email))
     dispatch(setPhone(response.telephone))
     dispatch(setPhoto(response.photo))
+    dispatch(setLoading(false))
+
   }
 
 
