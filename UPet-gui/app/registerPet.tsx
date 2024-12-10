@@ -8,6 +8,8 @@ import { sharedStyles } from './styles/sharedStyle';
 import { systemApiService } from '../api/api';
 import { registerStyles } from './styles/register';
 import { RegisterPetInput } from '../components/registerPetInputs/registerPetinputs';
+import { setLoading } from '../redux/slices/uiSlice';
+import { useDispatch } from 'react-redux';
 
 export default function DescriptionScreen() {
   const router = useRouter();
@@ -18,14 +20,19 @@ export default function DescriptionScreen() {
   const date_of_birth = useSelector((state: RootState) => state.registerPet.date_of_birth);
   const photo = useSelector((state: RootState) => state.registerPet.photo);
 
+  const dispatch = useDispatch()
+
   const handleBack = () => {
     router.push('/options'); 
   };
 
   const handleRegisterPet = async () => {
+    dispatch(setLoading(true))
     await systemApiService
       .registerPet(name, description, species, date_of_birth, photo)
       .then(() => router.push('/'));
+    dispatch(setLoading(false))
+    
   };
 
   return (

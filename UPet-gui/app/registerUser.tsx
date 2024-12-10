@@ -8,6 +8,8 @@ import { sharedStyles } from './styles/sharedStyle';
 import { systemApiService } from '../api/api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../redux/slices/uiSlice';
 
 
 export default function App() {
@@ -24,13 +26,18 @@ export default function App() {
   const description = useSelector((state: RootState) => state.registerUser.description)
   const password = useSelector((state: RootState) => state.registerUser.password)
   const photo = useSelector((state: RootState) => state.registerUser.photo)
+  
+  const dispatch = useDispatch()
 
   const handleBack = () => {
     router.push('/options'); 
   };
 
   const handleRegisterUser = async () =>{
+    dispatch(setLoading(true))
     await systemApiService.registerUser(name, phone, email, birth, address, cpf, photo, description, password).then(()=>router.push('/'))
+    dispatch(setLoading(false))
+
   }
 
   return (
