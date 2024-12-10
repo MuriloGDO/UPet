@@ -65,5 +65,17 @@ export const systemApiService = {
             const error = err as ErrorResponse;
             Alert.alert(error.response.data.error);
         }
+    },
+    editUser: async (photo: string | undefined | null, name:string, email:string, phone:string, address:string, description:string, id: number | null) =>{
+        try{
+            const response = await api.patch('/user_update/',{photo: photo ? photo: '', name:name, email:email, telephone:phone, address:address, description:description, id:id}, {
+                responseType:'json'
+            })
+            Alert.alert('Perfil editado com sucesso!')
+            return response.data
+        }catch(err) {
+            const error = err as ErrorResponse;
+            Alert.alert(error.response.data.error);
+        }
     }
 }

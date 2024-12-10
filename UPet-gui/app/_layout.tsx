@@ -8,7 +8,7 @@ export default function HomeLayout() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}
+      style={{ flex: 1, backgroundColor:'white'}}
     >
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
     <Provider store={store}>
