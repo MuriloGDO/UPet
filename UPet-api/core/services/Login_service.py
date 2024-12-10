@@ -40,17 +40,17 @@ class Login_service:
     
     @staticmethod
     def get_institution_info(login_id):
-        if Institution.objects.filter(id = login_id).exists():
-            institution = Institution.objects.filter(id = login_id)
+        try:
+            institution = Institution.objects.get(id=login_id)  # Substituído filter por get
             return {
                 "id": institution.id,
                 "cnpj": institution.cnpj,
                 "name": institution.name,
                 "telephone": institution.telephone,
                 "address": institution.address,
-                "email": institution.email
+                "email": institution.email,
             }
-        else:
+        except Institution.DoesNotExist:
             raise ObjectDoesNotExist("Instituição com o ID especificado não foi encontrada.")
         
     @staticmethod 
