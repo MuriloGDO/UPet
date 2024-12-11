@@ -28,7 +28,7 @@ class User:
             "cpf": self.cpf,
             "photo": self.photo,
             "description": self.description,
-            "cluster": self.cluster.id if self.cluster else None
+            "cluster": [c.id for c in self.cluster] if isinstance(self.cluster, list) else self.cluster.id if self.cluster else None
         }
 
         
