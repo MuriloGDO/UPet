@@ -19,6 +19,7 @@ class User_register_service:
         user_serializer = Users_model_serializer(data=user_data)
 
         if not user_serializer.is_valid():
+            print(user_serializer.errors)
             raise User_creation_exception(user_serializer.errors)
 
         user = user_serializer.save()
