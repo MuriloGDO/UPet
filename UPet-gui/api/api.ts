@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Alert } from 'react-native'
 import { setLoading } from '../redux/slices/uiSlice';
-import { useDispatch } from 'react-redux';
 
 export const baseUrl = 'http://54.87.23.159:80/'
 export const api = axios.create({
@@ -11,8 +10,6 @@ export const api = axios.create({
 interface ErrorResponse {
     response: { data: {error: string} };
 }
-
-const dispatch = useDispatch()
 
 export const systemApiService = {
     login : async (email: string, password: string) =>{
@@ -28,7 +25,6 @@ export const systemApiService = {
         }catch(err) {
             const error = err as ErrorResponse;
             Alert.alert(error.response.data.error);
-            dispatch(setLoading(false))
         }
     },
     registerUser : async (name: string, telephone: string, email:string, 
@@ -51,7 +47,6 @@ export const systemApiService = {
         }catch(err) {
             const error = err as ErrorResponse;
             Alert.alert(error.response.data.error);
-            dispatch(setLoading(false))
         }
     },
     registerPet: async (name: string, description: string, species: string,
@@ -70,7 +65,6 @@ export const systemApiService = {
         }catch(err) {
             const error = err as ErrorResponse;
             Alert.alert(error.response.data.error);
-            dispatch(setLoading(false))
 
         }
     },
@@ -84,7 +78,6 @@ export const systemApiService = {
         }catch(err) {
             const error = err as ErrorResponse;
             Alert.alert(error.response.data.error);
-            dispatch(setLoading(false))
 
         }
     }
