@@ -12,3 +12,4 @@ from .Pets_register import Pets_register
 from .Institution_delete import Institution_delete
 from .Institution_update import Institution_update
 from .Pets_update import Pets_update
+from .Institution_register import Institution_register

@@ -10,7 +10,7 @@ openai.api_base = "https://chat.maritaca.ai/api"
 
 class Maritalk:
 # Função para gerar resposta
-    def get_response(question, description):
+    def get_response(description):
         # Pergunta
         question = \
         """Estou fazendo uma segmentação de seres humanos para uma adoção de pets, que levam em consideração três informações, tempo disponível do dono, espaço disponível para o pet na moradia e se o dono já possui outros pets no local. Dessa forma, foram definidos os seguintes clusters:
