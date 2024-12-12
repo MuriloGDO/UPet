@@ -8,7 +8,11 @@ from datetime import datetime
 
 class Users_register(APIView):
     def post(self, request):
-        user_data = request.data.copy()
+        if type(request.data) == dict:
+            user_data = request.data.copy()
+        else:
+            user_data = request.data.dict()
+        print(user_data)
         user_data['date_of_birth'] = datetime.strptime(user_data['date_of_birth'], "%d/%m/%Y").date()
 
         try:
