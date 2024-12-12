@@ -3,6 +3,9 @@ from rest_framework.exceptions import ValidationError
 from ..api.serializers import Users_model_serializer, Login_model_serializer
 from ..exceptions import Rollback_exception, User_creation_exception
 from ..maritalkapi import Maritalk
+import logging
+
+logger = logging.getLogger(__name__)
 
 class User_register_service:
     @classmethod
@@ -10,18 +13,19 @@ class User_register_service:
         if not user_data.get('password') or user_data.get('password').strip() == "":
             raise User_creation_exception("A senha não pode ser vazia.")
         
-        
-        
         user_data['password'] = make_password(user_data.get('password'))
         clusters_response = Maritalk.Maritalk.get_response(user_data.get('description'))
         formatted_cluster_response = cls.formatt_maritalk_information(clusters_response)
         user_data['cluster'] = formatted_cluster_response
         user_serializer = Users_model_serializer(data=user_data)
+        logging.info("Passou pelo serializador de registro")
+
 
         if not user_serializer.is_valid():
-            print(user_serializer.errors)
+            logging.error(user_serializer.errors)
             raise User_creation_exception(user_serializer.errors)
-
+        
+        logging.info("Passou pelo serializador de registro")
         user = user_serializer.save()
         return user, user_serializer
     
