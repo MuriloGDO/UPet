@@ -28,8 +28,18 @@ export const Loading = () => {
     });
 
     return (
-      <View style={{ width: '100%', height: '100%', backgroundColor: 'black', opacity: spinning ? 0.8 : 0,
-         position: 'absolute', zIndex: 1, display:"flex", justifyContent:"center", alignItems:'center'}}>
+      <View style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'black',
+        opacity: 0.8,
+        position: 'absolute',
+        zIndex: 1,
+        elevation: spinning ? 5 : 0, 
+        display: spinning ? 'flex' : 'none', 
+        justifyContent: "center",
+        alignItems: 'center',
+      }}>
         <Animated.View style={{backgroundColor: "white", width:20, height:20, transform: [{ rotate: rotateInterpolate }],}} />
       </View>
     );
