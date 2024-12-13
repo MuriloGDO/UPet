@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, Image, TouchableOpacity, Alert } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { homeStyles } from './styles/home';
 import { PetSlider } from '../components/petSlider';
 import { Footer } from '../components/footer';
+import { useRouter } from 'expo-router';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const name = useSelector((state: RootState) => state.userInfo.name)
   const photo = useSelector((state: RootState) => state.userInfo.photo)
+  const userType = useSelector((state: RootState) => state.userInfo.user_type)
+
+  const router = useRouter()
 
   const selectedButton = ['gray', 'white']
   const notSelectedButton = ['white', 'black']
@@ -29,6 +33,20 @@ export default function App() {
     setButtonMaisProximos(selectedButton)
   }
 
+  useEffect(() => {
+    if (userType !== 'user') {
+      router.replace('/');
+      Alert.alert("Voce nao tem acesso a área de usuários.")
+    }
+  }, [userType, router]);
+
+  if(userType !== 'user'){
+    return (
+      <View>
+        <Text>Redirecionando...</Text>
+      </View>
+    )
+  }
   return (
     <>
     <View style={{marginTop:80}}>

@@ -21,7 +21,7 @@ export const systemApiService = {
                 responseType:'json'
             })
             Alert.alert('Login realizado com sucesso')
-            return response.data.data
+            return response.data
         }catch(err) {
             const error = err as ErrorResponse;
             Alert.alert(error.response.data.error);

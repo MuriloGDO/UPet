@@ -7,7 +7,7 @@ import { RootState } from '../redux/store';
 import { setEditaddress, setEditDescription, setEditEmail, setEditName, setEditPhone, setEditPhoto } from '../redux/slices/editUserSlice';
 import { useDispatch } from 'react-redux';
 import { systemApiService } from '../api/api';
-import { setaddress, setDescription, setEmail, setName, setPhone, setPhoto } from '../redux/slices/userInfoSlice';
+import { setaddress, setDescription, setEmail, setName, setPhone, setPhoto, setUserType } from '../redux/slices/userInfoSlice';
 import { setLoading } from '../redux/slices/uiSlice';
 
 
@@ -20,6 +20,7 @@ export default function UserProfile() {
   const addressCopy = useSelector((state: RootState) => state.userInfo.address)
   const descriptionCopy = useSelector((state: RootState) => state.userInfo.description)
   const userId = useSelector((state: RootState) => state.userInfo.id)
+  const type = useSelector((state: RootState) => state.userInfo.user_type)
 
   useEffect(()=>{
     dispatch(setEditName(nameCopy))
