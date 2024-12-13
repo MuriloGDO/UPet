@@ -1,7 +1,7 @@
 import React from "react"
 import { ImageBackground, View, StyleSheet, Text, Image } from "react-native"
 
-export const PetCard = (props: {name?:string, localizacao?:string, image?:string}) =>{
+export const PetCard = (props: {name?:string, percentage?:number, image?:string}) =>{
     return (
         
           <View style={styles.content}>
@@ -10,10 +10,10 @@ export const PetCard = (props: {name?:string, localizacao?:string, image?:string
                 style={styles.background}
                 >
                 <View style={styles.text}>
-                    <Text style={{color:'white', fontSize:16, fontWeight:600, marginBottom:3}}>Gaia</Text>
+                    <Text style={{color:'white', fontSize:16, fontWeight:600, marginBottom:3}}>{props.name}</Text>
                     <View style={{display:'flex', flexDirection:'row', alignItems:"center"}}>
-                        <Image style={{width:10, height:10, marginRight:5}} source={require('../../assets/pin.png')}/>
-                        <Text style={{color:'white'}}>BH, Belo Horizonte</Text>
+                        {/* <Image style={{width:10, height:10, marginRight:5}} source={require('../../assets/pin.png')}/> */}
+                        <Text style={{color:'white'}}>Match: {props.percentage}%</Text>
                     </View>
                 </View>
             </ImageBackground>

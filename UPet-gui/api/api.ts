@@ -100,5 +100,16 @@ export const systemApiService = {
             const error = err as ErrorResponse;
             Alert.alert(error.response.data.error);
         }
-    }    
+    },
+    getMatchingPets: async (user_id: number | null) => {
+        try {
+            const response = await api.post('/user_search_pet', {id: user_id}, {
+                responseType: 'json'
+            });
+            return response.data
+        } catch (err) {
+            const error = err as ErrorResponse;
+            Alert.alert(error.response.data.error);
+        }
+    }   
 }
