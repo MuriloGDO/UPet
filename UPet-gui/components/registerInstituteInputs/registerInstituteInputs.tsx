@@ -2,7 +2,7 @@ import React from 'react';
 import { TextInput, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store'
-import { setaddress, setEmail, setName, setPassword, setPhone } from '../../redux/slices/registerInstituteSlice';
+import { setaddress, setEmail, setName, setPassword, setPhone, setCnpj } from '../../redux/slices/registerInstituteSlice';
 import { sharedStyles } from '../../app/styles/sharedStyle';
 
 
@@ -12,6 +12,7 @@ export const RegisterInstituteInput = () => {
   const email = useSelector((state: RootState) => state.registerInstitute.email)
   const phone = useSelector((state: RootState) => state.registerInstitute.phone)
   const address = useSelector((state: RootState) => state.registerInstitute.address)
+  const cnpj = useSelector((state: RootState) => state.registerInstitute.cnpj)
   const password = useSelector((state: RootState) => state.registerInstitute.password)
 
   return (
@@ -43,6 +44,13 @@ export const RegisterInstituteInput = () => {
           placeholder="Enderço da instituição"
           value={address}
           onChangeText={(address)=> dispatch(setaddress(address))}
+        />
+        <Text style={sharedStyles.inputLabels}>CNPJ:</Text>
+        <TextInput
+          style={sharedStyles.input}
+          placeholder="CNPJ"
+          value={cnpj}
+          onChangeText={(cnpj)=> dispatch(setCnpj(cnpj))}
         />
         <Text style={sharedStyles.inputLabels}>Senha:</Text>
         <TextInput

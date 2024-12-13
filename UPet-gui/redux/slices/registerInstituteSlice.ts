@@ -34,11 +34,14 @@ const registerInstituteSlice = createSlice({
     setaddress(state, action: PayloadAction<string>) {
         state.address = action.payload
     },
+    setCnpj(state, action: PayloadAction<string>) {
+        state.cnpj = action.payload
+    },
     setPassword(state, action: PayloadAction<string>) {
       state.password = action.payload
   },
   },
 })
 
-export const { setName, setaddress, setPhone, setEmail, setPassword } = registerInstituteSlice.actions
+export const { setName, setaddress, setPhone, setEmail, setPassword, setCnpj } = registerInstituteSlice.actions
 export default registerInstituteSlice.reducer
