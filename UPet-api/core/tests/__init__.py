@@ -1,2 +1,3 @@
-from .views.test_Users_register import test_User_register
 from .services.test_User_register_service import Test_user_register_service
+from .services.test_Institution_register_service import test_Institution_register_service
+from .services.test_User_delete_service import test_User_delete_service

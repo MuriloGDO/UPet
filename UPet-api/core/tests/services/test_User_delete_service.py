@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.exceptions import ObjectDoesNotExist
 from ...models import Users, Login
-from ..services import User_delete_service
+from ...services import User_delete_service
 from ...exceptions import Rollback_exception
 
 class test_User_delete_service(TestCase):
