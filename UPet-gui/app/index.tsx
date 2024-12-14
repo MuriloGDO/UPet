@@ -12,7 +12,8 @@ import { sharedStyles } from './styles/sharedStyle';
 import { systemApiService } from '../api/api';
 import { useDispatch } from 'react-redux';
 import { setBirth, setCpf, setaddress, setDescription, 
-      setEmail, setName, setPhone, setPhoto, setUserCluster, setUserId } from '../redux/slices/userInfoSlice';
+      setEmail, setName, setPhone, setPhoto, setUserCluster, setUserId, 
+      setUserType} from '../redux/slices/userInfoSlice';
 import { setLoading } from '../redux/slices/uiSlice';
 
 SplashScreen.preventAutoHideAsync();
@@ -39,16 +40,17 @@ export default function App() {
   const handleLogin = async () =>{
     dispatch(setLoading(true))
     await systemApiService.login(email, password).then((response) => {
-      dispatch(setName(response.name))
-      dispatch(setBirth(response.date_of_birth))
-      dispatch(setCpf(response.cpf))
-      dispatch(setaddress(response.address))
-      dispatch(setDescription(response.description))
-      dispatch(setEmail(response.email))
-      dispatch(setPhone(response.telephone))
-      dispatch(setPhoto(response.photo))
-      dispatch(setUserCluster(response.cluster))
-      dispatch(setUserId(response.id))
+      dispatch(setName(response.data.name))
+      dispatch(setBirth(response.data.date_of_birth))
+      dispatch(setCpf(response.data.cpf))
+      dispatch(setaddress(response.data.address))
+      dispatch(setDescription(response.data.description))
+      dispatch(setEmail(response.data.email))
+      dispatch(setPhone(response.data.telephone))
+      dispatch(setPhoto(response.data.photo))
+      dispatch(setUserCluster(response.data.cluster))
+      dispatch(setUserId(response.data.id))
+      dispatch(setUserType(response.institution ? 'institution' : 'user'))
     })
     router.push('/home')
     dispatch(setLoading(false))

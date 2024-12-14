@@ -5,16 +5,31 @@ import { registerStyles } from './styles/register';
 import { RegisterInstituteInput } from '../components/registerInstituteInputs/registerInstituteInputs';
 import { Link, useRouter } from 'expo-router';
 import { sharedStyles } from './styles/sharedStyle';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { setLoading } from '../redux/slices/uiSlice';
+import { systemApiService } from '../api/api';
 
 export default function App() {
   const router = useRouter();
+
+  const dispatch = useDispatch()
+  const name = useSelector((state: RootState) => state.registerInstitute.name)
+  const email = useSelector((state: RootState) => state.registerInstitute.email)
+  const phone = useSelector((state: RootState) => state.registerInstitute.phone)
+  const address = useSelector((state: RootState) => state.registerInstitute.address)
+  const cnpj = useSelector((state: RootState) => state.registerInstitute.cnpj)
+  const password = useSelector((state: RootState) => state.registerInstitute.password)
 
   const handleBack = () => {
     router.push('/options');
   };
 
-  const handleRegisterPet = () => {
-    router.push('/registerPet');
+  const handleRegisterInstitution = async () => {
+    dispatch(setLoading(true))
+    await systemApiService.registerInstitute(name, email, phone, address, cnpj, password).then(()=>router.push('/'))
+    dispatch(setLoading(false))
   };
 
   return (
@@ -33,7 +48,7 @@ export default function App() {
           <TouchableOpacity onPress={()=>handleBack()} style={[sharedStyles.buttonStyle, sharedStyles.red, registerStyles.buttonsMargin]}>
             <Text style={{color:'white'}}>Voltar</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleRegisterPet} style={[sharedStyles.buttonStyle, sharedStyles.blue, registerStyles.buttonsMargin]}>
+        <TouchableOpacity onPress={handleRegisterInstitution} style={[sharedStyles.buttonStyle, sharedStyles.blue, registerStyles.buttonsMargin]}>
           <Text style={{ color: 'white' }}>Cadastrar</Text>
         </TouchableOpacity>
       </View>

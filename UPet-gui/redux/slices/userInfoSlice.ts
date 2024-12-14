@@ -11,6 +11,7 @@ interface userInfo {
   photo: string | null | undefined
   description: string
   cluster: number | null
+  user_type: string
 }
 
 const initialState: userInfo = {
@@ -23,7 +24,8 @@ const initialState: userInfo = {
     photo: '',
     description: '',
     cluster: null,
-    id: null
+    id: null,
+    user_type: ''
 }
 
 const UserInfoSlice = createSlice({
@@ -60,8 +62,11 @@ const UserInfoSlice = createSlice({
     setUserCluster(state, action: PayloadAction<number>) {
         state.cluster = action.payload
     },
+    setUserType(state, action: PayloadAction<string>) {
+        state.user_type = action.payload
+    },
   },
 })
 
-export const { setName, setaddress, setPhone, setEmail, setBirth, setCpf, setPhoto, setDescription, setUserCluster, setUserId } = UserInfoSlice.actions
+export const { setName, setaddress, setPhone, setEmail, setBirth, setCpf, setPhoto, setDescription, setUserCluster, setUserId, setUserType } = UserInfoSlice.actions
 export default UserInfoSlice.reducer

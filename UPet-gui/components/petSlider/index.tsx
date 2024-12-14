@@ -1,16 +1,14 @@
 import React from "react"
 import { ScrollView } from "react-native"
 import { PetCard } from "../petCard"
+import { MatchingPet } from "../../app/utils/petsResponseInterface"
 
-export const PetSlider =() => {
+export const PetSlider = (props: {pets: MatchingPet[]}) => {
     return(
         <ScrollView horizontal style={{display:"flex", flexDirection:"row", marginRight:10, marginLeft:10}}>
-            <PetCard></PetCard>
-            <PetCard></PetCard>
-            <PetCard></PetCard>
-            <PetCard></PetCard>
-            <PetCard></PetCard>
-            <PetCard></PetCard>
+                {props.pets.map((pet) => (
+                    <PetCard key={pet.id} name={pet.name} percentage={pet.percentage}/>
+                  ))}
         </ScrollView>
     )
 }

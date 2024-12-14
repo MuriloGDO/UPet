@@ -1,23 +1,35 @@
-import React, { useState } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, Image, TouchableOpacity, Alert } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { homeStyles } from './styles/home';
 import { PetSlider } from '../components/petSlider';
 import { Footer } from '../components/footer';
+import { useRouter } from 'expo-router';
+import { systemApiService } from '../api/api';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../redux/slices/uiSlice';
+import { MatchingPet } from './utils/petsResponseInterface';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const name = useSelector((state: RootState) => state.userInfo.name)
   const photo = useSelector((state: RootState) => state.userInfo.photo)
+  const userType = useSelector((state: RootState) => state.userInfo.user_type)
+  const user_id = useSelector((state: RootState) => state.userInfo.id)
+
+  const router = useRouter()
+
+  const dispatch = useDispatch()
 
   const selectedButton = ['gray', 'white']
   const notSelectedButton = ['white', 'black']
 
   const [buttonMaisCombinam, setButtonMaisCombinam] = useState<string[]>(selectedButton)
   const [buttonMaisProximos, setButtonMaisProximos] = useState<string[]>(notSelectedButton)
+  const [petsResponse, setPetsResponse] = useState<MatchingPet[]>([])
 
   const handleMaisCombinam = () =>{
     setButtonMaisCombinam(selectedButton)
@@ -27,6 +39,31 @@ export default function App() {
   const handleMaisProximos= () =>{
     setButtonMaisCombinam(notSelectedButton)
     setButtonMaisProximos(selectedButton)
+  }
+
+  const getPetMatches = async () =>{
+    dispatch(setLoading(true))
+    const response =  await systemApiService.getMatchingPets(user_id)
+    setPetsResponse(response.matching_pets)
+    dispatch(setLoading(false))
+  }
+
+  useEffect(() => {
+    if (userType !== 'user') {
+      router.replace('/');
+      Alert.alert("Voce nao tem acesso a área de usuários.")
+    }
+    else{
+      getPetMatches()
+    }
+  }, [userType, router]);
+
+  if(userType !== 'user'){
+    return (
+      <View>
+        <Text>Redirecionando...</Text>
+      </View>
+    )
   }
 
   return (
@@ -49,7 +86,7 @@ export default function App() {
             <TouchableOpacity onPress={() => handleMaisProximos()} style={[homeStyles.SelectButtonStyles, {backgroundColor:buttonMaisProximos[0]}]}><Text style={{color:buttonMaisProximos[1]}}>Mais próximos</Text></TouchableOpacity>
           </View>
         </View>
-        <PetSlider></PetSlider>
+        <PetSlider pets={petsResponse}></PetSlider>
         
     </View>
     <Footer></Footer>

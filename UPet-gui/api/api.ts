@@ -21,7 +21,7 @@ export const systemApiService = {
                 responseType:'json'
             })
             Alert.alert('Login realizado com sucesso')
-            return response.data.data
+            return response.data
         }catch(err) {
             const error = err as ErrorResponse;
             Alert.alert(error.response.data.error);
@@ -80,5 +80,36 @@ export const systemApiService = {
             Alert.alert(error.response.data.error);
 
         }
-    }
+    },
+    registerInstitute: async (name: string, email: string, telephone: string, address: string, cnpj: string, password: string) => {
+        try {
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('telephone', telephone);
+            formData.append('email', email);              
+            formData.append('address', address);
+            formData.append('cnpj', cnpj);
+            formData.append('password', password);
+
+            await api.post('/institution_register/', formData, {
+                responseType: 'json'
+            });
+
+            Alert.alert('Instituição criada com sucesso');
+        } catch (err) {
+            const error = err as ErrorResponse;
+            Alert.alert(error.response.data.error);
+        }
+    },
+    getMatchingPets: async (user_id: number | null) => {
+        try {
+            const response = await api.post('/user_search_pet', {id: user_id}, {
+                responseType: 'json'
+            });
+            return response.data
+        } catch (err) {
+            const error = err as ErrorResponse;
+            Alert.alert(error.response.data.error);
+        }
+    }   
 }
