@@ -50,22 +50,35 @@ export const systemApiService = {
         }
     },
     registerPet: async (name: string, description: string, species: string,
-        date_of_birth: string, photo: string|undefined|null) =>{
+        date_of_birth: string, photo: string|undefined|null, institutionId: number) =>{
         try{
-            const formData = new FormData()
-            formData.append('name', name)
-            formData.append('description', description)
-            formData.append('species', species)
-            formData.append('date_of_birth', date_of_birth)
-            photo ? formData.append('photo', photo) : undefined
-            await api.post('/pet_register/', formData, {
-                responseType:'json'
-            })
+            const formattedDateOfBirth = new Date(date_of_birth).toISOString().split("T")[0];
+            const payload = {
+                pet: {
+                    name,
+                    date_of_birth: formattedDateOfBirth,
+                    species,
+                    description,
+                    status: "Available"
+                },
+                photos: photo ? [{ photo }] : [],
+                register: {
+                    institution: institutionId,
+                    date_of_registration: new Date().toISOString().split("T")[0]
+                }
+            }
+            console.debug('Enviando para o back-end:', payload); // Log para o terminal
+            alert(`Enviando para o back-end: ${JSON.stringify(payload)}`);
+            await api.post('/pet_register/', payload, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             Alert.alert('Pet criado com sucesso')
         }catch(err) {
             const error = err as ErrorResponse;
             Alert.alert(error.response.data.error);
-
+            
         }
     },
     editUser: async (photo: string | undefined | null, name:string, email:string, phone:string, address:string, description:string, id: number | null) =>{
@@ -91,11 +104,12 @@ export const systemApiService = {
             formData.append('cnpj', cnpj);
             formData.append('password', password);
 
-            await api.post('/institution_register/', formData, {
+            const response = await api.post('/institution_register/', formData, {
                 responseType: 'json'
             });
 
             Alert.alert('Instituição criada com sucesso');
+            return response.data;
         } catch (err) {
             const error = err as ErrorResponse;
             Alert.alert(error.response.data.error);

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'expo-router';
 import { RootState } from '../redux/store';
-import { Text, Image, View, TouchableOpacity } from 'react-native';
+import { Text, Image, View, TouchableOpacity, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { sharedStyles } from './styles/sharedStyle';
 import { systemApiService } from '../api/api';
@@ -10,9 +10,12 @@ import { registerStyles } from './styles/register';
 import { RegisterPetInput } from '../components/registerPetInputs/registerPetinputs';
 import { setLoading } from '../redux/slices/uiSlice';
 import { useDispatch } from 'react-redux';
+import { useLocalSearchParams } from 'expo-router';
+
 
 export default function DescriptionScreen() {
   const router = useRouter();
+  const { institutionId } = useLocalSearchParams();
 
   const name = useSelector((state: RootState) => state.registerPet.name);
   const description = useSelector((state: RootState) => state.registerPet.description);
@@ -27,12 +30,37 @@ export default function DescriptionScreen() {
   };
 
   const handleRegisterPet = async () => {
-    dispatch(setLoading(true))
-    await systemApiService
-      .registerPet(name, description, species, date_of_birth, photo)
-      .then(() => router.push('/'));
-    dispatch(setLoading(false))
-    
+    dispatch(setLoading(true));
+
+    const payload = {
+      name,
+      description,
+      species,
+      date_of_birth,
+      photo,
+      institutionId: parseInt(institutionId as string), // Converte para número, caso necessário
+    };
+
+    // Log no terminal para inspecionar o payload
+    console.debug('Enviando para o back-end:', payload); // Log para o terminal
+    alert(`Enviando para o back-end: ${JSON.stringify(payload)}`);
+    try {
+
+      await systemApiService.registerPet(
+        name,
+        description,
+        species,
+        date_of_birth,
+        photo,
+        parseInt(institutionId as string) // Converte para número, caso necessário
+      );
+      Alert.alert('Pet cadastrado com sucesso!');
+      router.push('/');
+    } catch (error: any) {
+      Alert.alert(error.response?.data?.error || 'Erro ao cadastrar o pet.');
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 
   return (

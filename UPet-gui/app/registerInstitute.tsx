@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Image, View, TouchableOpacity } from 'react-native';
+import { Text, Image, View, TouchableOpacity, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { registerStyles } from './styles/register';
 import { RegisterInstituteInput } from '../components/registerInstituteInputs/registerInstituteInputs';
@@ -13,7 +13,7 @@ import { systemApiService } from '../api/api';
 
 export default function App() {
   const router = useRouter();
-
+  
   const dispatch = useDispatch()
   const name = useSelector((state: RootState) => state.registerInstitute.name)
   const email = useSelector((state: RootState) => state.registerInstitute.email)
@@ -27,9 +27,27 @@ export default function App() {
   };
 
   const handleRegisterInstitution = async () => {
-    dispatch(setLoading(true))
-    await systemApiService.registerInstitute(name, email, phone, address, cnpj, password).then(()=>router.push('/'))
-    dispatch(setLoading(false))
+    dispatch(setLoading(true));
+    try {
+      const response = await systemApiService.registerInstitute(
+        name,
+        email,
+        phone,
+        address,
+        cnpj,
+        password
+      );
+
+      const institutionId = response.id;
+      router.push({
+        pathname: '/registerPet',
+        params: { institutionId },
+      });
+    } catch (error: any) {
+      Alert.alert(error.response?.data?.error || 'Erro ao cadastrar a instituição.');
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 
   return (
