@@ -41,9 +41,6 @@ export default function DescriptionScreen() {
       institutionId: parseInt(institutionId as string), // Converte para número, caso necessário
     };
 
-    // Log no terminal para inspecionar o payload
-    console.debug('Enviando para o back-end:', payload); // Log para o terminal
-    alert(`Enviando para o back-end: ${JSON.stringify(payload)}`);
     try {
 
       await systemApiService.registerPet(

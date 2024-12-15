@@ -67,8 +67,6 @@ export const systemApiService = {
                     date_of_registration: new Date().toISOString().split("T")[0]
                 }
             }
-            console.debug('Enviando para o back-end:', payload); // Log para o terminal
-            alert(`Enviando para o back-end: ${JSON.stringify(payload)}`);
             await api.post('/pet_register/', payload, {
                 headers: {
                     'Content-Type': 'application/json'
