@@ -3,6 +3,12 @@ interface Cluster {
     name: string;
   }
   
+interface PetPhoto {
+  id: number;
+  photo:string;
+  uploaded_at: string;
+}
+
 export interface MatchingPet {
     id: number;
     name: string;
@@ -12,5 +18,6 @@ export interface MatchingPet {
     status: string;
     clusters: Cluster[];
     percentage: number;
+    photos: PetPhoto[];
   }
   
