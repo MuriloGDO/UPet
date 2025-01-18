@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Alert } from 'react-native'
 import { setLoading } from '../redux/slices/uiSlice';
 
-export const baseUrl = 'http://localhost:8000/'
+export const baseUrl = 'http://54.209.25.73:80/'
 export const api = axios.create({
   baseURL: `${baseUrl}api/`,
 })
