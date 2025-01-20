@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { setBirth, setCpf, setaddress, setDescription, 
       setEmail, setName, setPhone, setPhoto, setUserCluster, setUserId, 
       setUserType} from '../redux/slices/userInfoSlice';
+import { setInstAddress, setInstCnpj, setInstEmail, setInstId, setInstName, setInstPhone, setInstType } from '../redux/slices/institutionInfoSlice';
 import { setLoading } from '../redux/slices/uiSlice';
 
 SplashScreen.preventAutoHideAsync();
@@ -39,20 +40,43 @@ export default function App() {
 
   const handleLogin = async () =>{
     dispatch(setLoading(true))
-    await systemApiService.login(email, password).then((response) => {
-      dispatch(setName(response.data.name))
-      dispatch(setBirth(response.data.date_of_birth))
-      dispatch(setCpf(response.data.cpf))
-      dispatch(setaddress(response.data.address))
-      dispatch(setDescription(response.data.description))
-      dispatch(setEmail(response.data.email))
-      dispatch(setPhone(response.data.telephone))
-      dispatch(setPhoto(response.data.photo))
-      dispatch(setUserCluster(response.data.cluster))
-      dispatch(setUserId(response.data.id))
-      dispatch(setUserType(response.institution ? 'institution' : 'user'))
-    })
-    router.push('/home')
+    const response = await systemApiService.login(email, password)
+    if (response.institution) {
+      const {
+        data: {
+          adress, cnpj, email, id, name,
+          telephone
+        }
+      } = response;
+      dispatch(setInstAddress(adress))
+      dispatch(setInstCnpj(cnpj))
+      dispatch(setInstEmail(email))
+      dispatch(setInstId(id))
+      dispatch(setInstName(name))
+      dispatch(setInstPhone(telephone))
+      dispatch(setInstType('institution'))
+      router.push('/institutionPage')
+    } else {
+      const {
+        data: {
+          name, date_of_birth, cpf, address, description,
+          email, telephone, photo, cluster, id
+        }
+      } = response;
+    
+      dispatch(setName(name));
+      dispatch(setBirth(date_of_birth));
+      dispatch(setCpf(cpf));
+      dispatch(setaddress(address));
+      dispatch(setDescription(description));
+      dispatch(setEmail(email));
+      dispatch(setPhone(telephone));
+      dispatch(setPhoto(photo));
+      dispatch(setUserCluster(cluster));
+      dispatch(setUserId(id));
+      dispatch(setUserType('user'));
+      router.push('/home')
+    }
     dispatch(setLoading(false))
   }
 

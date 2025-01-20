@@ -15,7 +15,6 @@ import { useLocalSearchParams } from 'expo-router';
 
 export default function DescriptionScreen() {
   const router = useRouter();
-  const { institutionId } = useLocalSearchParams();
 
   const name = useSelector((state: RootState) => state.registerPet.name);
   const description = useSelector((state: RootState) => state.registerPet.description);
@@ -30,34 +29,16 @@ export default function DescriptionScreen() {
   };
 
   const handleRegisterPet = async () => {
-    dispatch(setLoading(true));
-
-    const payload = {
+    //dispatch(setLoading(true));
+    await systemApiService.registerPet(
       name,
       description,
       species,
       date_of_birth,
       photo,
-      institutionId: parseInt(institutionId as string), // Converte para número, caso necessário
-    };
-
-    try {
-
-      await systemApiService.registerPet(
-        name,
-        description,
-        species,
-        date_of_birth,
-        photo,
-        parseInt(institutionId as string) // Converte para número, caso necessário
-      );
-      Alert.alert('Pet cadastrado com sucesso!');
-      router.push('/');
-    } catch (error: any) {
-      Alert.alert(error.response?.data?.error || 'Erro ao cadastrar o pet.');
-    } finally {
-      dispatch(setLoading(false));
-    }
+    )
+    router.push('/institutionPage')
+    dispatch(setLoading(false));
   };
 
   return (
@@ -80,7 +61,7 @@ export default function DescriptionScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={handleRegisterPet}
+          onPress={()=>handleRegisterPet()}
           style={[sharedStyles.buttonStyle, sharedStyles.blue, registerStyles.buttonsMargin]}
         >
           <Text style={{ color: 'white' }}>Cadastrar</Text>
