@@ -1,5 +1,5 @@
 from rest_framework import routers
-from .views import Users_view_set, Clusters_view_set, Intitution_view_set, Users_register, Login_view, Login_view_set, Users_delete, Users_update, Users_information, Pets_register, Institution_delete, Institution_update, Pets_update, Institution_register, Users_search_pets, Institution_information
+from .views import Users_view_set, Clusters_view_set, Intitution_view_set, Users_register, Login_view, Login_view_set, Users_delete, Users_update, Users_information, Pets_register, Institution_delete, Institution_update, Pets_update, Institution_register, Users_search_pets, Institution_information, Institution_search_by_filters
 from django.urls import path, include
 
 router = routers.DefaultRouter()
@@ -22,4 +22,5 @@ urlpatterns = [
     path('pet_update/', Pets_update.as_view(), name='pet-update'),
     path('institution_register/', Institution_register.as_view(), name='institution-register'),
     path('institution_information/', Institution_information.as_view(), name='institution-information'),
+    path('institution_search_by_filters/', Institution_search_by_filters.as_view(), name='institution-search-by-filters'),
 ]
