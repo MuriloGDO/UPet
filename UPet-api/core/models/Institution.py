@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from ..classes import Institution
-from django.db.models import Q
 
 class Institution(models.Model):
     cnpj = models.CharField(max_length=15, unique=True)
@@ -17,16 +16,3 @@ class Institution(models.Model):
             return Institution(institution.id, institution.cnpj, institution.telephone, institution.address, institution.email, institution.password)
         else:
             raise ObjectDoesNotExist("Instituição com o ID especificado não foi encontrada.")
-        
-    def search(**filters):
-        query = Q()
-        if 'cnpj' in filters:
-            query &= Q(cnpj__icontains=filters['cnpj'])
-        if 'name' in filters:
-            query &= Q(name__icontains=filters['name'])
-        if 'email' in filters:
-            query &= Q(email__icontains=filters['email'])
-        if 'address' in filters:
-            query &= Q(address__icontains=filters['address'])
-
-        return Institution.objects.filter(query)
