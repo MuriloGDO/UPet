@@ -21,6 +21,7 @@ export default function DescriptionScreen() {
   const species = useSelector((state: RootState) => state.registerPet.species);
   const date_of_birth = useSelector((state: RootState) => state.registerPet.date_of_birth);
   const photo = useSelector((state: RootState) => state.registerPet.photo);
+  const { institutionId } = useLocalSearchParams();
 
   const dispatch = useDispatch()
 
@@ -36,6 +37,7 @@ export default function DescriptionScreen() {
       species,
       date_of_birth,
       photo,
+      parseInt(institutionId as string)
     )
     router.push('/institutionPage')
     dispatch(setLoading(false));
