@@ -24,9 +24,9 @@ class Institution_search_by_filters(APIView):
 
             if not results.exists():
                 raise ObjectDoesNotExist
-            
+
             serializer = Institution_serializers(results, many = True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        
+
         except ObjectDoesNotExist:
             return Response({"error": "Não foi encontrada nenhuma instatuição"}, status=status.HTTP_404_NOT_FOUND)
