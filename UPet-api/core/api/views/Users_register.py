@@ -12,7 +12,7 @@ class Users_register(APIView):
             user_data = request.data.copy()
         else:
             user_data = request.data.dict()
-        print(user_data)
+
         user_data['date_of_birth'] = datetime.strptime(user_data['date_of_birth'], "%d/%m/%Y").date()
 
         try:

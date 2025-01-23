@@ -14,3 +14,4 @@ from .Institution_update import Institution_update
 from .Pets_update import Pets_update
 from .Institution_register import Institution_register
 from .Institution_information import Institution_information
+from .Institution_search_by_filters import Institution_search_by_filters

@@ -17,6 +17,7 @@ class Pets_register_service:
     @staticmethod
     def register_pet(data):
         pet_data = data.get('pet')
+        print(pet_data)
         if not pet_data:
             return Response({"error": "Pet data is required."}, status=status.HTTP_400_BAD_REQUEST)
 
