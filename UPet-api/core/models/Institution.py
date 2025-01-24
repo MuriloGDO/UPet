@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
-from ..classes import Institution
+from ..classes.Institutions import Institutions
 from django.db.models import Q
 
 class Institution(models.Model):
@@ -14,7 +14,7 @@ class Institution(models.Model):
     def find_by_id(id):
         if Institution.objects.filter(id = id).exists():
             institution = Institution.objects.get(id = id)
-            return Institution(institution.id, institution.cnpj, institution.telephone, institution.address, institution.email, institution.password)
+            return Institutions(institution.id, institution.cnpj, institution.name, institution.telephone, institution.address, institution.email, institution.password)
         else:
             raise ObjectDoesNotExist("Instituição com o ID especificado não foi encontrada.")
         

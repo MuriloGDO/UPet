@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from ...models import Institution
-from ...classes import Institution
+from ...classes import Institutions
 from django.core.exceptions import ObjectDoesNotExist
 from ..serializers import Institution_serializers
 
