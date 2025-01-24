@@ -50,18 +50,17 @@ export const systemApiService = {
         }
     },
     registerPet: async (name: string, description: string, species: string,
-        date_of_birth: string, photo: string|undefined|null, institutionId: number) =>{
+        date_of_birth: string, photo: string|undefined|null, institutionId: number|null) =>{
         try{
-            const formattedDateOfBirth = new Date(date_of_birth).toISOString().split("T")[0];
             const payload = {
                 pet: {
                     name,
-                    date_of_birth: formattedDateOfBirth,
+                    date_of_birth: date_of_birth,
                     species,
                     description,
-                    status: "Available"
+                    status: "Available",
                 },
-                photos: photo ? [{ photo }] : [],
+                photos: photo ? [ {photo} ] : [],
                 register: {
                     institution: institutionId,
                     date_of_registration: new Date().toISOString().split("T")[0]

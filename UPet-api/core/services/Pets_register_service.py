@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from ..models import Pets, Pets_photos, Register_pets, Institution
 from ..api.serializers import Pets_model_serializer, Pets_photos_model_serializer, Register_pets_serializer
 from ..maritalkapi import Maritalk
+from datetime import datetime
 
 class Pets_register_service:
     @staticmethod
@@ -17,7 +18,6 @@ class Pets_register_service:
     @staticmethod
     def register_pet(data):
         pet_data = data.get('pet')
-        print(pet_data)
         if not pet_data:
             return Response({"error": "Pet data is required."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -34,6 +34,7 @@ class Pets_register_service:
         clusters_response = Maritalk.Maritalk.get_response(pet_data.get('description'))
         formatted_cluster_response = Pets_register_service.formatt_maritalk_information(clusters_response)
         pet_data['cluster'] = formatted_cluster_response
+        pet_data['date_of_birth'] =  (datetime.strptime(pet_data['date_of_birth'], '%d/%m/%Y')).strftime('%Y-%m-%d')
 
         pet_serializer = Pets_model_serializer(data=pet_data)
         if pet_serializer.is_valid():

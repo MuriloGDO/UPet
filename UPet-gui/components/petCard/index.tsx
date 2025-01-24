@@ -1,10 +1,10 @@
 import React from "react"
 import { ImageBackground, View, StyleSheet, Text, Image } from "react-native"
 
-export const PetCard = (props: {name?:string, percentage?:number, image?:string}) =>{
+export const PetCard = (props: {name?:string, percentage?:number, image?:string, width?:number, marginRight?: number}) =>{
     return (
         
-          <View style={styles.content}>
+          <View style={[styles.content,{width: props.width?props.width:300, marginRight: props.marginRight==0?props.marginRight:30}]}>
             <ImageBackground
                 source={props.image ? { uri: `data:image/jpeg;base64,${props.image}` } : require('../../assets/golden.jpg.webp')}
                 style={styles.background}
@@ -31,11 +31,9 @@ export const PetCard = (props: {name?:string, percentage?:number, image?:string}
         content: {
           backgroundColor: 'rgba(0, 0, 0, 0.5)', 
           borderRadius: 30,
-          width: 300,
           height: 450,
           display: 'flex',
           overflow: 'hidden',
-          marginRight:30
         },
         text: {
           width: 200,

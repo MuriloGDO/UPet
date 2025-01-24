@@ -20,6 +20,8 @@ export default function App() {
   const photo = useSelector((state: RootState) => state.userInfo.photo)
   const userType = useSelector((state: RootState) => state.userInfo.user_type)
   const user_id = useSelector((state: RootState) => state.userInfo.id)
+  const petsResponse = useSelector((state: RootState) => state.petsSlice.pets)
+  
 
   const router = useRouter()
 
@@ -30,7 +32,6 @@ export default function App() {
 
   const [buttonMaisCombinam, setButtonMaisCombinam] = useState<string[]>(selectedButton)
   const [buttonMaisProximos, setButtonMaisProximos] = useState<string[]>(notSelectedButton)
-  const [petsResponse, setPetsResponse] = useState<MatchingPet[]>([])
 
   const handleMaisCombinam = () =>{
     setButtonMaisCombinam(selectedButton)
@@ -45,7 +46,7 @@ export default function App() {
   const getPetMatches = async () =>{
     dispatch(setLoading(true))
     const response =  await systemApiService.getMatchingPets(user_id)
-    setPetsResponse(response.matching_pets)
+    dispatch(setPetsResponse(response.matching_pets))
     dispatch(setLoading(false))
   }
 
