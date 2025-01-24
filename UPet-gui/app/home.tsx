@@ -11,6 +11,7 @@ import { systemApiService } from '../api/api';
 import { useDispatch } from 'react-redux';
 import { setLoading } from '../redux/slices/uiSlice';
 import { MatchingPet } from './utils/petsResponseInterface';
+import SearchBar from '../components/searchBar/searchBar';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -48,6 +49,10 @@ export default function App() {
     dispatch(setLoading(false))
   }
 
+  const handleSearch = (term: string) => {
+    console.log("Termo pesquisado:", term);
+  };
+
   useEffect(() => {
     if (userType !== 'user') {
       router.replace('/');
@@ -76,6 +81,7 @@ export default function App() {
                   <Image style={{width:30, height:30, marginLeft:9}} source={require('../assets/patas.png')} />
                 </View>
                 <Text style={{fontSize:20, fontWeight:300}}>Encontre o seu parceiro</Text>
+                <SearchBar onSearch={handleSearch} placeholder="Procure pelas instituições" />
             </View>
             <Image style={{width:50, height:50, borderWidth: 1, borderColor: 'black', borderRadius:100}} source={photo ? { uri: `data:image/jpeg;base64,${photo}` } : require('../assets/user_not_found.jpeg')} />
         </View>
