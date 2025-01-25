@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { setLoading } from '../redux/slices/uiSlice';
 import { MatchingPet } from './utils/petsResponseInterface';
 import SearchBar from '../components/searchBar/searchBar';
+import { setPetsResponse } from '../redux/slices/petsResponseSlice';
 
 SplashScreen.preventAutoHideAsync();
 
