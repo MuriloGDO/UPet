@@ -29,4 +29,4 @@ class Institution_search_by_filters(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         except ObjectDoesNotExist:
-            return Response({"error": "Não foi encontrada nenhuma instatuição"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Não foi encontrada nenhuma instituição"}, status=status.HTTP_404_NOT_FOUND)

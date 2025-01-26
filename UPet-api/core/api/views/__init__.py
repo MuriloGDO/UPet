@@ -15,3 +15,5 @@ from .Pets_update import Pets_update
 from .Institution_register import Institution_register
 from .Institution_information import Institution_information
 from .Institution_search_by_filters import Institution_search_by_filters
+from .Pets_delete import Pets_delete
+from .Institution_count_pets import Institution_count_pets
