@@ -5,7 +5,7 @@ from ...models import Pets
 from ...classes.Pets import Pets
 from django.core.exceptions import ObjectDoesNotExist
 
-class Institution_search_by_filters(APIView):
+class Pets_search_by_filters(APIView):
     def post(self, request):
         filters = request.data
         search_params = {
