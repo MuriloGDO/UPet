@@ -21,6 +21,7 @@ urlpatterns = [
     path('institution_update/', Institution_update.as_view(), name='Institution-update'),
     path('pet_update/', Pets_update.as_view(), name='pet-update'),
     path('pet_delete/', Pets_delete.as_view(), name='pet-delete'),
+    path('pet_delete/', Pets_delete.as_view(), name='pet-delete'),
     path('institution_register/', Institution_register.as_view(), name='institution-register'),
     path('institution_information/', Institution_information.as_view(), name='institution-information'),
     path('institution_search_by_filters/', Institution_search_by_filters.as_view(), name='institution-search-by-filters'),
