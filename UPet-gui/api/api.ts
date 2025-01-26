@@ -20,7 +20,6 @@ export const systemApiService = {
             const response = await api.post('/login/', formData, {
                 responseType:'json'
             })
-            Alert.alert('Login realizado com sucesso')
             return response.data
         }catch(err) {
             const error = err as ErrorResponse;

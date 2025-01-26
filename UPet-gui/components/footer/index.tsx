@@ -12,7 +12,7 @@ export const Footer = () =>{
             <TouchableOpacity onPress={()=> router.push('/')}>
                 <Image style={styles.images} source={require('../../assets/gostar.png')} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=> router.push('/')}>
+            <TouchableOpacity onPress={()=> router.push('/chats')}>
                 <Image style={styles.images} source={require('../../assets/mail.png')} />
             </TouchableOpacity>
             <TouchableOpacity onPress={()=> router.push('/userProfile')}>
