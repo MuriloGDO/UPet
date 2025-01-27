@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { router } from "expo-router"; // Ou use "next/router" para Next.js
-import { systemApiService } from '../../api/api';
+import { systemApiService } from "../../api/api";
 
 interface Institution {
   id: number;
@@ -21,9 +21,8 @@ const SearchBar: React.FC = () => {
     if (searchTerm.trim() === "") return;
 
     try {
-      // Chama o método da API para buscar instituições
       const data = await systemApiService.searchInstitutions(searchTerm);
-      setResults(data); // Atualiza os resultados
+      setResults(data);
     } catch (error) {
       console.error("Erro ao buscar instituições:", error);
     }
@@ -35,7 +34,6 @@ const SearchBar: React.FC = () => {
       params: {
         id: institution.id,
         name: institution.name,
-        cnpj: institution.cnpj,
         telephone: institution.telephone,
         email: institution.email,
         address: institution.address,
@@ -60,18 +58,18 @@ const SearchBar: React.FC = () => {
 
       {/* Renderiza os resultados */}
       {results.length > 0 && (
-        <ul style={styles.results}>
+        <div style={styles.cardsContainer}>
           {results.map((institution) => (
-            <li
+            <div
               key={institution.id}
-              style={styles.resultItem}
+              style={styles.card}
               onClick={() => handleInstitutionClick(institution)}
             >
-              <strong>{institution.name}</strong>
-              <p>{institution.address}</p>
-            </li>
+              <p style={styles.cardDetail}>{institution.name}</p>
+              <p style={styles.cardDetail}>CNPJ: {institution.cnpj}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
@@ -85,14 +83,14 @@ const styles = {
     margin: "16px 0",
     width: "100%",
     maxWidth: "600px",
-  },
+  } as React.CSSProperties,
   input: {
     flex: 1,
     padding: "12px",
     border: "1px solid #ccc",
     borderRadius: "8px",
     fontSize: "16px",
-  },
+  } as React.CSSProperties,
   iconButton: {
     padding: "10px",
     border: "none",
@@ -100,17 +98,28 @@ const styles = {
     color: "#fff",
     borderRadius: "8px",
     cursor: "pointer",
-  },
-  results: {
-    listStyle: "none",
-    padding: 0,
+  } as React.CSSProperties,
+  cardsContainer: {
+    display: "flex",
+    flexDirection: "column" as "column", // Valor explícito esperado
+    gap: "12px",
     marginTop: "16px",
-  },
-  resultItem: {
-    padding: "12px",
-    borderBottom: "1px solid #ccc",
+  } as React.CSSProperties,
+  card: {
+    padding: "16px",
+    border: "1px solid #ddd",
+    borderRadius: "8px",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
     cursor: "pointer",
-  },
+    backgroundColor: "#fff",
+    transition: "transform 0.2s, box-shadow 0.2s",
+  } as React.CSSProperties,
+  cardDetail: {
+    fontSize: "14px",
+    marginBottom: "4px",
+    color: "#555",
+  } as React.CSSProperties,
 };
+
 
 export default SearchBar;

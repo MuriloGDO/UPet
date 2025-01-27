@@ -54,7 +54,7 @@ export const systemApiService = {
             const payload = {
                 pet: {
                     name,
-                    date_of_birth: date_of_birth,
+                    date_of_birth,
                     species,
                     description,
                     status: "Available",
@@ -121,5 +121,16 @@ export const systemApiService = {
             const error = err as ErrorResponse;
             Alert.alert(error.response.data.error);
         }
-    }   
+    },
+    searchInstitutions: async (name: string) => {
+        try {
+            const response = await api.post('/institution_search_by_filters/', {name: name}, {
+                responseType: 'json'
+            });
+            return response.data;
+        } catch (err) {
+            const error = err as ErrorResponse;
+            Alert.alert(error.response.data.error);
+        }
+    },
 }

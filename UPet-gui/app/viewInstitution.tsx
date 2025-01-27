@@ -3,41 +3,21 @@ import { View, Text, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { homeInstitutionsStyle } from './styles/viewInstitution';
 import { Footer } from '../components/footer';
-import { useSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import axios from 'axios';
 
 export default function InstitutionProfile() {
-  // const { institutionId } = useSearchParams();
   const router = useRouter();
+  const { id, name, telephone, email, address } = useLocalSearchParams();
 
-  const institutionId = 1
-
-  const [institutionData, setInstitutionData] = useState({
-    name: '',
-    address: '',
-    telephone: '',
-    email: '',
-  });
   const [petCounter, setPetCounter] = useState(0);
   const [error, setError] = useState<string | null>(null);
-
-  // // Função para buscar informações da instituição
-  // const fetchInstitutionDetails = async () => {
-  //   try {
-  //     const response = await axios.post('http://127.0.0.1:8000/api/institution_information/', {
-  //       id: institutionId,
-  //     });
-  //     setInstitutionData(response.data);
-  //   } catch (err) {
-  //     setError('Erro ao carregar os dados da instituição.');
-  //   }
-  // };
 
   // Função para buscar a quantidade de pets
   const fetchPetCount = async () => {
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/institution_count_pets/', {
-        id: institutionId,
+        id: id,
       });
       setPetCounter(response.data.pet_counter);
     } catch (err) {
@@ -46,11 +26,10 @@ export default function InstitutionProfile() {
   };
 
   useEffect(() => {
-    if (institutionId) {
-      // fetchInstitutionDetails();
+    if (id) {
       fetchPetCount();
     }
-  }, [institutionId]);
+  }, [id]);
 
   const handleBack = () => {
     router.push("/home");
@@ -62,7 +41,7 @@ export default function InstitutionProfile() {
         <Icon name="arrow-back" size={24} onPress={handleBack} />
       </View>
       <View style={homeInstitutionsStyle.header}>
-        <Text style={homeInstitutionsStyle.headerText}>{institutionData.name}</Text>
+        <Text style={homeInstitutionsStyle.headerText}>{name}</Text>
       </View>
 
       <ScrollView style={homeInstitutionsStyle.content}>
@@ -76,12 +55,12 @@ export default function InstitutionProfile() {
 
             {/* Contato */}
             <Text style={homeInstitutionsStyle.sectionTitle}>Contato:</Text>
-            <Text style={homeInstitutionsStyle.text}>Email: {institutionData.email}</Text>
-            <Text style={homeInstitutionsStyle.text}>Telefone: {institutionData.telephone}</Text>
-            <Text style={homeInstitutionsStyle.text}>Endereço: {institutionData.address}</Text>
+            <Text style={homeInstitutionsStyle.text}>Email: {email}</Text>
+            <Text style={homeInstitutionsStyle.text}>Telefone: {telephone}</Text>
+            <Text style={homeInstitutionsStyle.text}>Endereço: {address}</Text>
 
             {/* Pets da Instituição */}
-            <Text style={homeInstitutionsStyle.sectionTitle}>Pets da {institutionData.name}:</Text>
+            <Text style={homeInstitutionsStyle.sectionTitle}>Pets da {name}:</Text>
             <Text style={homeInstitutionsStyle.text}>...</Text>
           </>
         )}

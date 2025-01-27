@@ -40,8 +40,7 @@ export default function App() {
 
       const institutionId = response.id;
       router.push({
-        pathname: '/registerPet',
-        params: { institutionId },
+        pathname: '/institutionPage',
       });
     } catch (error: any) {
       Alert.alert(error.response?.data?.error || 'Erro ao cadastrar a instituição.');
