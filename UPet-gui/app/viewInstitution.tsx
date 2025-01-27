@@ -5,6 +5,7 @@ import { homeInstitutionsStyle } from './styles/viewInstitution';
 import { Footer } from '../components/footer';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import axios from 'axios';
+import { systemApiService } from "../api/api";
 
 export default function InstitutionProfile() {
   const router = useRouter();
@@ -13,23 +14,23 @@ export default function InstitutionProfile() {
   const [petCounter, setPetCounter] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
+  const institutionId = Array.isArray(id) ? id[0] : id;
+
   // Função para buscar a quantidade de pets
-  const fetchPetCount = async () => {
+  const PetCount = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/institution_count_pets/', {
-        id: id,
-      });
-      setPetCounter(response.data.pet_counter);
+      const data = await systemApiService.fetchPetCount(institutionId);
+      setPetCounter(data.pet_counter);
     } catch (err) {
       setError('Erro ao carregar a quantidade de pets.');
     }
   };
 
   useEffect(() => {
-    if (id) {
-      fetchPetCount();
+    if (institutionId) {
+      PetCount();
     }
-  }, [id]);
+  }, [institutionId]);
 
   const handleBack = () => {
     router.push("/home");

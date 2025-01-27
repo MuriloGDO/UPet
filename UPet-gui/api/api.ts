@@ -133,4 +133,15 @@ export const systemApiService = {
             Alert.alert(error.response.data.error);
         }
     },
+    fetchPetCount: async (id: string | null) => {
+        try {
+          const response = await axios.post('http://127.0.0.1:8000/api/institution_count_pets/', {
+            id: id,
+          });
+          return response.data;
+        } catch (err) {
+          const error = err as ErrorResponse;
+          Alert.alert(error.response.data.error);
+        }
+    },
 }
