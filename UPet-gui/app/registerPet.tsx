@@ -32,7 +32,7 @@ export default function DescriptionScreen() {
   };
 
   const handleRegisterPet = async () => {
-    //dispatch(setLoading(true));
+    dispatch(setLoading(true));
     await systemApiService.registerPet(
       name,
       description,

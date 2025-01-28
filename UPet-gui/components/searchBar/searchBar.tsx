@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { router } from "expo-router"; // Ou use "next/router" para Next.js
+import { View, TextInput, TouchableOpacity, Text, StyleSheet } from "react-native";
+
+import { useRouter } from "expo-router"; // ou next/router para Next.js
 import { systemApiService } from "../../api/api";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../redux/slices/uiSlice";
 
 interface Institution {
   id: number;
@@ -15,16 +18,20 @@ interface Institution {
 const SearchBar: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>(""); // Texto de busca
   const [results, setResults] = useState<Institution[]>([]); // Armazena os resultados
+  const router = useRouter();
+  const dispatch = useDispatch()
 
-  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSearch = async () => {
     if (searchTerm.trim() === "") return;
 
     try {
+      dispatch(setLoading(true))
       const data = await systemApiService.searchInstitutions(searchTerm);
       setResults(data);
+      dispatch(setLoading(false))
     } catch (error) {
       console.error("Erro ao buscar instituições:", error);
+      dispatch(setLoading(false))
     }
   };
 
@@ -42,84 +49,91 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <div style={{ width: "100%", maxWidth: "600px", margin: "0 auto" }}>
-      <form onSubmit={handleSearch} style={styles.form}>
-        <input
-          type="text"
+    <View style={styles.container}>
+      <View style={styles.form}>
+        <TextInput
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChangeText={setSearchTerm}
           placeholder="Digite o nome da instituição..."
           style={styles.input}
         />
-        <button type="submit" style={styles.iconButton}>
-          <FaSearch size={16} />
-        </button>
-      </form>
+        <TouchableOpacity onPress={handleSearch} style={styles.iconButton}>
+          <Text>
+            Buscar
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       {/* Renderiza os resultados */}
       {results.length > 0 && (
-        <div style={styles.cardsContainer}>
+        <View style={styles.cardsContainer}>
           {results.map((institution) => (
-            <div
+            <TouchableOpacity
               key={institution.id}
               style={styles.card}
-              onClick={() => handleInstitutionClick(institution)}
+              onPress={() => handleInstitutionClick(institution)}
             >
-              <p style={styles.cardDetail}>{institution.name}</p>
-              <p style={styles.cardDetail}>CNPJ: {institution.cnpj}</p>
-            </div>
+              <Text style={styles.cardDetail}>{institution.name}</Text>
+              <Text style={styles.cardDetail}>CNPJ: {institution.cnpj}</Text>
+            </TouchableOpacity>
           ))}
-        </div>
+        </View>
       )}
-    </div>
+    </View>
   );
 };
 
-const styles = {
-  form: {
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    margin: "16px 0",
+const styles = StyleSheet.create({
+  container: {
     width: "100%",
-    maxWidth: "600px",
-  } as React.CSSProperties,
+    maxWidth: 600,
+    marginHorizontal: "auto",
+  },
+  form: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginVertical: 16,
+    width: "100%",
+    maxWidth: 600,
+  },
   input: {
     flex: 1,
-    padding: "12px",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    fontSize: "16px",
-  } as React.CSSProperties,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    fontSize: 16,
+  },
   iconButton: {
-    padding: "10px",
-    border: "none",
+    padding: 10,
     backgroundColor: "#007BFF",
-    color: "#fff",
-    borderRadius: "8px",
-    cursor: "pointer",
-  } as React.CSSProperties,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   cardsContainer: {
-    display: "flex",
-    flexDirection: "column" as "column", // Valor explícito esperado
-    gap: "12px",
-    marginTop: "16px",
-  } as React.CSSProperties,
+    flexDirection: "column",
+    gap: 12,
+    marginTop: 16,
+  },
   card: {
-    padding: "16px",
-    border: "1px solid #ddd",
-    borderRadius: "8px",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-    cursor: "pointer",
+    padding: 16,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
     backgroundColor: "#fff",
-    transition: "transform 0.2s, box-shadow 0.2s",
-  } as React.CSSProperties,
+    transform: [{ scale: 1 }],
+  },
   cardDetail: {
-    fontSize: "14px",
-    marginBottom: "4px",
+    fontSize: 14,
+    marginBottom: 4,
     color: "#555",
-  } as React.CSSProperties,
-};
-
+  },
+});
 
 export default SearchBar;

@@ -71,7 +71,7 @@ export default function App() {
 
   return (
     <>
-    <View style={{marginTop:80}}>
+    <View style={{marginTop:80, marginBottom:100}}>
         <View style={{display:'flex', flexDirection:'row' ,alignContent:'center' , marginBottom:30, justifyContent:'space-between', width:'90%', alignSelf:'center'}}>
             <View style={{display:'flex', flexDirection:'column'}}>
                 <View style={{display:'flex', flexDirection:'row'}}>
