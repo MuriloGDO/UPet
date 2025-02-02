@@ -81,7 +81,9 @@ export default function App() {
                 <Text style={{fontSize:20, fontWeight:300}}>Encontre o seu parceiro</Text>
                 <SearchBar />
             </View>
+            <TouchableOpacity onPress={()=> router.push('/userProfile')}>
             <Image style={{width:50, height:50, borderWidth: 1, borderColor: 'black', borderRadius:100}} source={photo ? { uri: `data:image/jpeg;base64,${photo}` } : require('../assets/user_not_found.jpeg')} />
+            </TouchableOpacity>
         </View>
         <View style={{alignContent:'center' , marginBottom:30, justifyContent:'space-between', width:'90%', alignSelf:'center'}}>
           <Text style={{fontSize:19}}>Perfeitos para voce:</Text>

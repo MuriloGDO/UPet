@@ -28,7 +28,7 @@ export default function DescriptionScreen() {
   
 
   const handleBack = () => {
-    router.push('/options'); 
+    router.push('/institutionPage'); 
   };
 
   const handleRegisterPet = async () => {

@@ -90,6 +90,19 @@ export const systemApiService = {
 
         }
     },
+    editInstitution: async (name:string, email:string, phone:string, address:string) =>{
+        try{
+            const response = await api.patch('/user_update/',{name:name, email:email, telephone:phone, address:address}, {
+                responseType:'json'
+            })
+            Alert.alert('Perfil editado com sucesso!')
+            return response.data
+        }catch(err) {
+            const error = err as ErrorResponse;
+            Alert.alert(error.response.data.error);
+
+        }
+    },
     registerInstitute: async (name: string, email: string, telephone: string, address: string, cnpj: string, password: string) => {
         try {
             const formData = new FormData();
