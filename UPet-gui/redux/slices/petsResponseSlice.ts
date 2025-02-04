@@ -3,10 +3,12 @@ import { MatchingPet } from '../../app/utils/petsResponseInterface'
 
 interface UiSlice {
   pets: MatchingPet[] 
+  petsByInstitution: MatchingPet[] 
 }
 
 const initialState: UiSlice = {
-    pets: []
+    pets: [],
+    petsByInstitution: []
 }
 
 const PetsResponse = createSlice({
@@ -16,8 +18,11 @@ const PetsResponse = createSlice({
     setPetsResponse(state, action: PayloadAction<MatchingPet[]>) {
       state.pets = action.payload
     },
+    setPetsByInstitution(state, action: PayloadAction<MatchingPet[]>) {
+      state.petsByInstitution = action.payload
+    },
   },
 })
 
-export const { setPetsResponse } = PetsResponse.actions
+export const { setPetsResponse, setPetsByInstitution } = PetsResponse.actions
 export default PetsResponse.reducer

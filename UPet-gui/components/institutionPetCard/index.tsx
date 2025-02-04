@@ -6,9 +6,9 @@ export const InstitutionPetCard = (props: { name?: string; image?: string }) => 
     <View style={styles.cardStyle}>
       <Image
         style={{ width: 120, height: 120 }}
-        source={require("../../assets/golden.jpg.webp")}
+        source={props.image ? { uri: `data:image/jpeg;base64,${props.image}` } : require("../../assets/golden.jpg.webp")}
       />
-      <Text style={styles.textStyle}>Golden exemplo</Text>
+      <Text style={styles.textStyle}>{props.name}</Text>
     </View>
   );
 };

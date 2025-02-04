@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, Alert, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useSelector } from 'react-redux';
@@ -8,20 +8,34 @@ import { useDispatch } from 'react-redux';
 import { institutionStyles } from './styles/institution';
 import { InstitutionPetCard } from '../components/institutionPetCard';
 import { Footer } from '../components/footer';
+import { systemApiService } from '../api/api';
+import { MatchingPet } from './utils/petsResponseInterface';
+import { setLoading } from '../redux/slices/uiSlice';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const name = useSelector((state: RootState) => state.institutionInfo.name);
+  const [pets, setPets] = useState<MatchingPet[]>([])
+  const id = useSelector((state: RootState) => state.institutionInfo.id);
   const userType = useSelector((state: RootState) => state.institutionInfo.user_type);
 
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const getPets = async ()=>{
+    dispatch(setLoading(true))
+    const response = await systemApiService.listPetByInstitution(id)
+    setPets(response)
+    dispatch(setLoading(false))
+  }
+
   useEffect(() => {
     if (userType !== 'institution') {
       router.replace('/');
       Alert.alert("Você não tem acesso à área de instituição.");
+    }
+    else{
+      getPets()
     }
   }, [userType, router]);
 
@@ -46,18 +60,9 @@ export default function App() {
         <View style={institutionStyles.hr} />
 
         <ScrollView style={styles.scrollContainer}>
-          <InstitutionPetCard />
-          <InstitutionPetCard />
-          <InstitutionPetCard />
-          <InstitutionPetCard />
-          <InstitutionPetCard />
-          <InstitutionPetCard />
-          <InstitutionPetCard />
-          <InstitutionPetCard />
-          <InstitutionPetCard />
-          <InstitutionPetCard />
-          <InstitutionPetCard />
-          <InstitutionPetCard />
+          {pets.map((pet) => (
+                <InstitutionPetCard key={pet.id} name={pet.name} image={pet.photos[0] ? pet.photos[0].photo : undefined}/>
+          ))}
         </ScrollView>
       </View>
       <Footer></Footer>

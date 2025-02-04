@@ -6,6 +6,7 @@ import { RootState } from "../../redux/store"
 import { useDispatch } from "react-redux"
 import { setUserType } from "../../redux/slices/userInfoSlice"
 import { setInstType } from "../../redux/slices/institutionInfoSlice"
+import { setPetsResponse } from "../../redux/slices/petsResponseSlice"
 
 export const Footer = () =>{
     const router = useRouter()
@@ -29,6 +30,7 @@ export const Footer = () =>{
                     router.push('/')
                     dispatch(setUserType(''))
                     dispatch(setInstType(''))
+                    dispatch(setPetsResponse([]))
                 }}>
                 <Image style={styles.images} source={require('../../assets/sair.png')} />
             </TouchableOpacity>

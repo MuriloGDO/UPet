@@ -13,7 +13,11 @@ export const PetCard = (props: {name?:string, percentage?:number, image?:string,
                     <Text style={{color:'white', fontSize:16, fontWeight:600, marginBottom:3}}>{props.name}</Text>
                     <View style={{display:'flex', flexDirection:'row', alignItems:"center"}}>
                         {/* <Image style={{width:10, height:10, marginRight:5}} source={require('../../assets/pin.png')}/> */}
+                        {props.percentage ?
                         <Text style={{color:'white'}}>Match: {props.percentage}%</Text>
+                        :
+                        undefined
+                        }
                     </View>
                 </View>
             </ImageBackground>

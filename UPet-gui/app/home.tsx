@@ -56,7 +56,7 @@ export default function App() {
       router.replace('/');
       Alert.alert("Voce nao tem acesso a área de usuários.")
     }
-    else{
+    else if(petsResponse.length == 0){
       getPetMatches()
     }
   }, [userType, router]);

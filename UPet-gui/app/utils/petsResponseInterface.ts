@@ -9,8 +9,17 @@ interface PetPhoto {
   uploaded_at: string;
 }
 
+interface Institution {
+  adress: number;
+  email:string;
+  id: number;
+  name: string;
+  telephone: string;
+}
+
 export interface MatchingPet {
     id: number;
+    institution: Institution | null;
     name: string;
     date_of_birth: string;
     species: string;

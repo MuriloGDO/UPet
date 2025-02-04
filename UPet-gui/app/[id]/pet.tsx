@@ -58,6 +58,7 @@ export default function App() {
           alignItems: 'center',
           justifyContent: 'center',
         }}
+        onPress={()=>console.log(pet?.institution?.id)}
       >
         <Text style={{ color: 'white', fontWeight:600 }}>Fale com o lar</Text>
       </TouchableOpacity>

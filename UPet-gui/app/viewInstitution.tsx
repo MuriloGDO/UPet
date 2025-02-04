@@ -6,10 +6,16 @@ import { Footer } from '../components/footer';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import axios from 'axios';
 import { systemApiService } from "../api/api";
+import { PetSlider } from '../components/petSlider';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 export default function InstitutionProfile() {
   const router = useRouter();
-  const { id, name, telephone, email, address } = useLocalSearchParams();
+  const { id, name, telephone, email, address, petsData } = useLocalSearchParams();
+
+  const petsResponse = useSelector((state: RootState) => state.petsSlice.petsByInstitution)
+
 
   const [petCounter, setPetCounter] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -62,11 +68,11 @@ export default function InstitutionProfile() {
 
             {/* Pets da Instituição */}
             <Text style={homeInstitutionsStyle.sectionTitle}>Pets da {name}:</Text>
-            <Text style={homeInstitutionsStyle.text}>...</Text>
+            <PetSlider pets={petsResponse}></PetSlider>
           </>
         )}
       </ScrollView>
-
+      
       <Footer />
     </View>
   );

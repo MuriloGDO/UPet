@@ -5,6 +5,8 @@ import { useRouter } from "expo-router"; // ou next/router para Next.js
 import { systemApiService } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../redux/slices/uiSlice";
+import { MatchingPet } from "../../app/utils/petsResponseInterface";
+import { setPetsByInstitution } from "../../redux/slices/petsResponseSlice";
 
 interface Institution {
   id: number;
@@ -35,7 +37,11 @@ const SearchBar: React.FC = () => {
     }
   };
 
-  const handleInstitutionClick = (institution: Institution) => {
+  const handleInstitutionClick = async (institution: Institution) => {
+    dispatch(setLoading(true))
+    const response : MatchingPet[]  = await systemApiService.listPetByInstitution(institution.id)
+    dispatch(setPetsByInstitution(response))
+    dispatch(setLoading(false))
     router.push({
       pathname: "/viewInstitution",
       params: {
@@ -116,6 +122,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: 12,
     marginTop: 16,
+    justifyContent:'center',
+    alignItems:'center'
   },
   card: {
     padding: 16,

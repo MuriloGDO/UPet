@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Alert } from 'react-native'
 import { setLoading } from '../redux/slices/uiSlice';
+import { useDispatch } from 'react-redux';
 
 export const baseUrl = 'http://127.0.0.1:8000/'
 export const api = axios.create({
@@ -10,6 +11,8 @@ export const api = axios.create({
 interface ErrorResponse {
     response: { data: {error: string} };
 }
+
+
 
 export const systemApiService = {
     login : async (email: string, password: string) =>{
@@ -151,6 +154,17 @@ export const systemApiService = {
           const response = await axios.post('http://127.0.0.1:8000/api/institution_count_pets/', {
             id: id,
           });
+          return response.data;
+        } catch (err) {
+          const error = err as ErrorResponse;
+          Alert.alert(error.response.data.error);
+        }
+    },
+    listPetByInstitution: async (inst_id: number | null) => {
+        try {
+          const response = await axios.get('http://127.0.0.1:8000/api/institution_list_pets/', { params: {
+            id: inst_id,
+          }});
           return response.data;
         } catch (err) {
           const error = err as ErrorResponse;

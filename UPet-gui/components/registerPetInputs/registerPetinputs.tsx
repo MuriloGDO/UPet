@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TextInput, Text, Image, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store'
@@ -14,6 +14,14 @@ export const RegisterPetInput = () => {
   const name = useSelector((state: RootState) => state.registerPet.name)
   const species = useSelector((state: RootState) => state.registerPet.species)
   const date_of_birth = useSelector((state: RootState) => state.registerPet.date_of_birth)
+
+  useEffect(()=>{
+    dispatch(setSpecies(''))
+    dispatch(setDateOfBirth(''))
+    dispatch(setDescription(''))
+    dispatch(setName(''))
+    dispatch(setPhoto(''))
+  }, [])
 
   const handleBirthChange = (input: string) => {
 

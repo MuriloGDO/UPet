@@ -30,6 +30,7 @@ export const homeInstitutionsStyle = StyleSheet.create({
       fontWeight: 'bold',
       marginTop: 16,
       alignItems: 'center',
+      marginBottom:8
     },
     text: {
       fontSize: 14,
