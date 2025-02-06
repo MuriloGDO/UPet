@@ -8,7 +8,7 @@ export const ChatCard = (props: { name?: string; image?: string }) => {
         style={{ width: 120, height: 120 }}
         source={require("../../assets/user_not_found.jpeg")}
       />
-      <Text style={styles.textStyle}>Chat exemplo</Text>
+      <Text style={styles.textStyle}>{props.name}</Text>
     </View>
   );
 };

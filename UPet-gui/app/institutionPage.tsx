@@ -60,9 +60,9 @@ export default function App() {
         <View style={institutionStyles.hr} />
 
         <ScrollView style={styles.scrollContainer}>
-          {pets.map((pet) => (
+          {pets ? pets.map((pet) => (
                 <InstitutionPetCard key={pet.id} name={pet.name} image={pet.photos[0] ? pet.photos[0].photo : undefined}/>
-          ))}
+          )) : undefined}
         </ScrollView>
       </View>
       <Footer></Footer>

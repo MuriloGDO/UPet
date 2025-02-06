@@ -14,7 +14,6 @@ class Chat_rooms(ListAPIView):
         queryset = Chat_room.objects.all()
         user_id = self.request.query_params.get("user_id")
         institution_id = self.request.query_params.get("institution_id")
-        print(user_id)
         if user_id != None:
             user_id = int(user_id)  # Converte para inteiro
             queryset = queryset.filter(user_id=user_id)

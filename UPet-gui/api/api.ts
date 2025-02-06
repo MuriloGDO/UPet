@@ -151,7 +151,7 @@ export const systemApiService = {
     },
     fetchPetCount: async (id: string | null) => {
         try {
-          const response = await axios.post('http://127.0.0.1:8000/api/institution_count_pets/', {
+          const response = await api.post('/institution_count_pets/', {
             id: id,
           });
           return response.data;
@@ -162,9 +162,44 @@ export const systemApiService = {
     },
     listPetByInstitution: async (inst_id: number | null) => {
         try {
-          const response = await axios.get('http://127.0.0.1:8000/api/institution_list_pets/', { params: {
+          const response = await api.get('/institution_list_pets/', { params: {
             id: inst_id,
           }});
+          return response.data;
+        } catch (err) {
+          const error = err as ErrorResponse;
+          Alert.alert(error.response.data.error);
+        }
+    },
+    createChat: async (instId: number | undefined, userId: number | null, petId: number | undefined) => {
+        try {
+          const response = await api.post('/chat/create/', {
+            user_id: userId,
+            institution_id: instId,
+            pet_id: petId
+          });
+          return response.data;
+        } catch (err) {
+          const error = err as ErrorResponse;
+          Alert.alert(error.response.data.error);
+        }
+    },
+    listChats: async (instId: number | null, userId: number | null) => {
+        try {
+            const response = await api.get(
+                `/chat/chat_rooms/?${userId ? `user_id=${userId}` : `institution_id=${instId}`}`
+              );
+          return response.data;
+        } catch (err) {
+          const error = err as ErrorResponse;
+          Alert.alert(error.response.data.error);
+        }
+    },
+    getChatHistory: async (chatRoom: string | string[]) => {
+        try {
+            const response = await api.get(
+                `/chat/history/${chatRoom}/`
+              );
           return response.data;
         } catch (err) {
           const error = err as ErrorResponse;

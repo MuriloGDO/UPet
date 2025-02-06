@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Provider } from 'react-redux';
 import { store } from '../redux/store'; 
-import { Slot } from 'expo-router';
+import { Slot, SplashScreen } from 'expo-router';
 import { Loading } from '../components/loading';
+
+SplashScreen.preventAutoHideAsync();
 
 export default function HomeLayout() {
   return (

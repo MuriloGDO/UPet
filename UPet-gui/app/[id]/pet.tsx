@@ -5,10 +5,16 @@ import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import { PetCard } from '../../components/petCard';
 import { LinearGradient } from 'expo-linear-gradient';
+import { systemApiService } from '../../api/api';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../../redux/slices/uiSlice';
 
 export default function App() {
   const { id } = useLocalSearchParams();
   const petsResponse = useSelector((state: RootState) => state.petsSlice.pets);
+  const user_id = useSelector((state: RootState) => state.userInfo.id);
+
+  const dispatch = useDispatch()
 
   const pet = petsResponse.find((pet) => String(pet.id) === id);
 
@@ -58,9 +64,13 @@ export default function App() {
           alignItems: 'center',
           justifyContent: 'center',
         }}
-        onPress={()=>console.log(pet?.institution?.id)}
+        onPress={async ()=>{
+          dispatch(setLoading(true))
+          await systemApiService.createChat(pet?.institution?.id, user_id, pet?.id)
+          router.push('/chats')
+        }}
       >
-        <Text style={{ color: 'white', fontWeight:600 }}>Fale com o lar</Text>
+        <Text style={{ color: 'white', fontWeight:600 }}>Entre em contato</Text>
       </TouchableOpacity>
     </ScrollView>
   );
