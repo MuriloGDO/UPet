@@ -1,1 +1,2 @@
 from .Message_serializer import Message_serializer
+from .Chat_room_serializer import Chat_room_serializer
