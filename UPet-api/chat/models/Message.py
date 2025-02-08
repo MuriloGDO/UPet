@@ -2,7 +2,7 @@ from django.db import models
 
 class Message(models.Model):
     user = models.ForeignKey("core.Users", on_delete=models.CASCADE, null=True)
-    institution = models.ForeignKey("core.Institution", on_delete=models.CASCADE, null=True)
+    pet = models.ForeignKey("core.Pets", on_delete=models.CASCADE, null=True)
     room = models.ForeignKey("chat.Chat_room", on_delete=models.CASCADE, related_name="messages")
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)

@@ -11,16 +11,23 @@ class Chat_rooms(ListAPIView):
         """
         Filtra os chats por usuário ou instituição com base nos parâmetros da URL.
         """
-        queryset = Chat_room.objects.all()
+        queryset = Chat_room.objects.select_related("user", "pet", "institution").all()
         user_id = self.request.query_params.get("user_id")
+        pet_id = self.request.query_params.get("pet_id")
         institution_id = self.request.query_params.get("institution_id")
+
         if user_id != None:
             user_id = int(user_id)  # Converte para inteiro
             queryset = queryset.filter(user_id=user_id)
             return queryset
 
-        if institution_id != None:
-            institution_id = int(institution_id)  # Converte para inteiro
+        if pet_id != None:
+            pet_id = int(pet_id)  # Converte para inteiro
+            queryset = queryset.filter(pet_id=pet_id)
+            return queryset
+        
+        if institution_id !=None:
+            institution_id = int(institution_id)
             queryset = queryset.filter(institution_id=institution_id)
             return queryset
 

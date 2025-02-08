@@ -1,7 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import Chat_room, Message
-from core.models import Users, Institution
+from core.models import Users, Pets
 from asgiref.sync import sync_to_async
 from django.shortcuts import get_object_or_404
 from channels.db import database_sync_to_async
@@ -39,13 +39,13 @@ class Chat_consumer(AsyncWebsocketConsumer):
         data = json.loads(text_data)
         message = data['message']
         user_id = data['user_id']
-        institution_id = data['institution_id']
+        pet_id = data['pet_id']
 
         # Salvando a mensagem no banco de dados
         room = await sync_to_async(get_object_or_404)(Chat_room, name=self.room_name)
         user_instance = await database_sync_to_async(lambda: Users.objects.get(id=user_id))() if user_id else None
-        institution_instance = await database_sync_to_async(lambda: Institution.objects.get(id=institution_id))() if institution_id else None
-        await sync_to_async(Message.objects.create)(room=room, user=user_instance, institution=institution_instance, content=message)
+        pet_instance = await database_sync_to_async(lambda: Pets.objects.get(id=pet_id))() if pet_id else None
+        await sync_to_async(Message.objects.create)(room=room, user=user_instance, pet=pet_instance, content=message)
 
         # Enviar a mensagem para todos os clientes conectados na sala
         await self.channel_layer.group_send(
@@ -54,7 +54,7 @@ class Chat_consumer(AsyncWebsocketConsumer):
                 'type': 'chat_message',
                 'message': message,
                 'user': user_instance.name if user_instance else None,
-                'institution': institution_instance.name if institution_instance else None,
+                'pet': pet_instance.name if pet_instance else None,
             }
         )
     
@@ -63,5 +63,5 @@ class Chat_consumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'message': event['message'],
             'user': event['user'],
-            'institution': event['institution'],
+            'pet': event['pet'],
         }))
