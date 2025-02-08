@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { TextInput, Text, Image, TouchableOpacity } from 'react-native';
+import { TextInput, Text, Image, TouchableOpacity, View, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store'
 import { setSpecies, setDateOfBirth, setDescription, setName, setPhoto } from '../../redux/slices/registerPetSlice';
@@ -34,18 +34,52 @@ export const RegisterPetInput = () => {
     dispatch(setDateOfBirth(formatted));
   };
 
-  const handlePhotoChange = async () =>{
-    const imageUri = await pickImage()
-    dispatch(setPhoto(imageUri))
+  const handlePhotoChange = async () => {
+    const imageUri = await pickImage();
+    if (imageUri) {
+      dispatch(setPhoto(photo ? `${photo},${imageUri}` : imageUri));
+    }
+  };
+
+  const handleRemovePhoto = (photoUri: string) => {
+    const updatedPhotos = photo?.split(',').filter((img) => img !== photoUri).join(',');
+
+    dispatch(setPhoto(updatedPhotos));
   }
 
+  const photoArray = photo ? photo.split(',') : [];
   return (
     <>
-        <Image style={registerPetInputsStyles.registerImageStyle} 
-        source={photo ? { uri: `data:image/jpeg;base64,${photo}` } : require('../../assets/user_not_found.jpeg')} />
+        <Text style={[sharedStyles.uPetText, sharedStyles.textContainer]}>Cadastro</Text>
+        <FlatList
+          data={photoArray}
+          horizontal
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View style={{ position: 'relative', marginRight: 10 }}>
+              <Image
+                style={{ width: 100, height: 100, borderRadius: 10 }}
+                source={{ uri: `data:image/jpeg;base64,${item}` }}
+              />
+              <TouchableOpacity
+                onPress={() => handleRemovePhoto(item)}
+                style={{
+                  position: 'absolute',
+                  top: 5,
+                  right: 5,
+                  backgroundColor: 'red',
+                  borderRadius: 10,
+                  padding: 5
+                }}
+              >
+                <Text style={{ color: 'white', fontWeight: 'bold' }}>X</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
 
-        <TouchableOpacity onPress={()=>handlePhotoChange()} style={[sharedStyles.buttonStyle, registerPetInputsStyles.photoButtonStyle]}>
-          <Text style={{color:'white'}}>{photo ? 'Trocar foto do pet' : 'Escolha foto do pet'}</Text>
+        <TouchableOpacity onPress={handlePhotoChange} style={[sharedStyles.buttonStyle, registerPetInputsStyles.photoButtonStyle]}>
+          <Text style={{ color: 'white' }}>{photo ? 'Adicionar mais fotos' : 'Escolher foto do pet'}</Text>
         </TouchableOpacity>
         <TextInput
           style={[sharedStyles.input, registerPetInputsStyles.inputMargin]}
