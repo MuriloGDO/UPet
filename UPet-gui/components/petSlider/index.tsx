@@ -1,7 +1,7 @@
 import React from "react"
 import { ScrollView, TouchableOpacity } from "react-native"
 import { PetCard } from "../petCard"
-import { MatchingPet } from "../../app/utils/petsResponseInterface"
+import { MatchingPet } from "../../app/utils/ResponsesInterface"
 import { useRouter } from "expo-router"
 
 export const PetSlider = (props: {pets: MatchingPet[]}) => {

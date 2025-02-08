@@ -5,7 +5,7 @@ import { useRouter } from "expo-router"; // ou next/router para Next.js
 import { systemApiService } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../redux/slices/uiSlice";
-import { MatchingPet } from "../../app/utils/petsResponseInterface";
+import { MatchingPet } from "../../app/utils/ResponsesInterface";
 import { setPetsByInstitution } from "../../redux/slices/petsResponseSlice";
 
 interface Institution {

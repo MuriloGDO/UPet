@@ -56,7 +56,7 @@ const UserInfoSlice = createSlice({
     setDescription(state, action: PayloadAction<string>) {
         state.description = action.payload
     },
-    setUserId(state, action: PayloadAction<number>) {
+    setUserId(state, action: PayloadAction<number | null>) {
         state.id = action.payload
     },
     setUserCluster(state, action: PayloadAction<number>) {

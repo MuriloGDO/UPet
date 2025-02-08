@@ -37,11 +37,6 @@ export default function App() {
         cnpj,
         password
       );
-
-      const institutionId = response.id;
-      router.push({
-        pathname: '/institutionPage',
-      });
     } catch (error: any) {
       Alert.alert(error.response?.data?.error || 'Erro ao cadastrar a instituição.');
     } finally {
