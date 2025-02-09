@@ -8,4 +8,5 @@ from .Institution_register_service import Institution_register_service
 from .Pets_update_service import Pets_update_service
 from .Pets_register_service import Pets_register_service
 from .Pets_delete_service import Pets_delete_service
+from .Adopt_pet_service import Adopt_pet_service
 from .Adoption_service import Adoption_service

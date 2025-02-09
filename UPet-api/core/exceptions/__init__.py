@@ -1,2 +1,3 @@
 from .Rollback_exception import Rollback_exception
 from .User_creation_exception import User_creation_exception
+from .Adopt_pet_exception import Adopt_pet_exception
