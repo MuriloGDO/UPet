@@ -1,14 +1,22 @@
 import React from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
 
-export const ChatCard = (props: { name?: string; image?: string }) => {
+export const ChatCard = (props: { name?: string; image?: string, petName?:string }) => {
   return (
     <View style={styles.cardStyle}>
       <Image
         style={{ width: 120, height: 120 }}
-        source={require("../../assets/user_not_found.jpeg")}
+        source={props.image ? { uri: `data:image/jpeg;base64,${props.image}` } : require("../../assets/user_not_found.jpeg")}
       />
-      <Text style={styles.textStyle}>{props.name}</Text>
+      <View style={{display:"flex", flexDirection:'column'}}>
+        <Text style={styles.textStyle}>{props.name}</Text>
+        {props.petName
+        ?
+        <Text style={styles.petTextStyle}>Pet: {props.petName}</Text>
+        :
+        undefined  
+        }
+      </View>
     </View>
   );
 };
@@ -33,6 +41,11 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: 20,
+    marginLeft: 20, 
+    alignSelf: "center",
+  },
+  petTextStyle: {
+    fontSize: 15,
     marginLeft: 20, 
     alignSelf: "center",
   },

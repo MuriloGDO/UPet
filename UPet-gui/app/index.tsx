@@ -39,45 +39,49 @@ export default function App() {
   }
 
   const handleLogin = async () =>{
-    dispatch(setLoading(true))
-    const response = await systemApiService.login(email, password)
-    if (response.institution) {
-      const {
-        data: {
-          adress, cnpj, email, id, name,
-          telephone
-        }
-      } = response;
-      dispatch(setInstAddress(adress))
-      dispatch(setInstCnpj(cnpj))
-      dispatch(setInstEmail(email))
-      dispatch(setInstId(id))
-      dispatch(setInstName(name))
-      dispatch(setInstPhone(telephone))
-      dispatch(setInstType('institution'))
-      router.push('/institutionPage')
-    } else {
-      const {
-        data: {
-          name, date_of_birth, cpf, address, description,
-          email, telephone, photo, cluster, id
-        }
-      } = response;
-    
-      dispatch(setName(name));
-      dispatch(setBirth(date_of_birth));
-      dispatch(setCpf(cpf));
-      dispatch(setaddress(address));
-      dispatch(setDescription(description));
-      dispatch(setEmail(email));
-      dispatch(setPhone(telephone));
-      dispatch(setPhoto(photo));
-      dispatch(setUserCluster(cluster));
-      dispatch(setUserId(id));
-      dispatch(setUserType('user'));
-      router.push('/home')
+    try{
+      dispatch(setLoading(true))
+      const response = await systemApiService.login(email, password)
+      if (response.institution) {
+        const {
+          data: {
+            adress, cnpj, email, id, name,
+            telephone
+          }
+        } = response;
+        dispatch(setInstAddress(adress))
+        dispatch(setInstCnpj(cnpj))
+        dispatch(setInstEmail(email))
+        dispatch(setInstId(id))
+        dispatch(setInstName(name))
+        dispatch(setInstPhone(telephone))
+        dispatch(setInstType('institution'))
+        router.push('/institutionPage')
+      } else {
+        const {
+          data: {
+            name, date_of_birth, cpf, address, description,
+            email, telephone, photo, cluster, id
+          }
+        } = response;
+      
+        dispatch(setName(name));
+        dispatch(setBirth(date_of_birth));
+        dispatch(setCpf(cpf));
+        dispatch(setaddress(address));
+        dispatch(setDescription(description));
+        dispatch(setEmail(email));
+        dispatch(setPhone(telephone));
+        dispatch(setPhoto(photo));
+        dispatch(setUserCluster(cluster));
+        dispatch(setUserId(id));
+        dispatch(setUserType('user'));
+        router.push('/home')
+      }
+      dispatch(setLoading(false))
+    }catch{
+      dispatch(setLoading(false))
     }
-    dispatch(setLoading(false))
   }
 
   return (

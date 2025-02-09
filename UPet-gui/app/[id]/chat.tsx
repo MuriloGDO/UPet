@@ -9,13 +9,13 @@ import { RootState } from '../../redux/store';
 interface IMessage{
     content: string
     id: number | null
-    institution: null | number
+    pet: null | number
     timestamp: string
     user: null | number
 }
 
 export default function ChatScreen() {
-  const { id, user_id, inst_id } = useLocalSearchParams();   
+  const { id, user_id, pet_id, institution_name, user_name } = useLocalSearchParams();   
   const WS_URL = `ws://127.0.0.1:8000/ws/chat/${id}/`;
   const dispatch = useDispatch();
 
@@ -45,7 +45,7 @@ export default function ChatScreen() {
       const newMessage : IMessage = {
         content: data.message,
         id: null,
-        institution: data.institution ? 1 : 0,
+        pet: data.institution ? 1 : 0,
         timestamp: "",
         user: data.user ? 1 : 0
       }
@@ -60,7 +60,7 @@ export default function ChatScreen() {
       ws.send(JSON.stringify({
         message: input,
         user_id: userType ? user_id : null,
-        institution_id: userType ? null : inst_id, 
+        pet_id: userType ? null : pet_id, 
       }));
       setInput('');
     }
@@ -69,16 +69,19 @@ export default function ChatScreen() {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={()=> router.push('/chats')}>
-        <Text style={{marginLeft:15, fontSize:18}}>{"< Voltar"}</Text>
+        <Text style={{marginLeft:15, fontSize:18, marginBottom:5}}>{"< Voltar"}</Text>
       </TouchableOpacity>
+      <View style={{justifyContent:"center", alignItems:"center", marginBottom:10}}>
+        <Text style={{fontSize:20}}>{userType ? institution_name : user_name}</Text>
+      </View>
       <ScrollView contentContainerStyle={styles.chatContainer}>
         {messages ? messages.map((msg, index) => (
           <View key={index} style={[styles.message, { backgroundColor: userType ? msg.user ? 'green' : 'gray' : msg.user ? 'gray' : 'green'}]}>
             {
                 userType ?
-                <Text style={styles.user}>{msg.institution ? 'Instituiçao' : 'Voce'}:</Text>
+                <Text style={styles.user}>{msg.pet ? institution_name : 'Voce'}:</Text>
                 :
-                <Text style={styles.user}>{msg.institution ? 'Voce' : 'Usuário'}:</Text>
+                <Text style={styles.user}>{msg.pet ? 'Voce' : user_name}:</Text>
             }
             <Text style={styles.text}>{msg.content}</Text>
           </View>

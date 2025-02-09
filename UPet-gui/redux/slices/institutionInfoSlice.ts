@@ -39,7 +39,7 @@ const InstitutionInfoSlice = createSlice({
     setInstCnpj(state, action: PayloadAction<string>) {
         state.cnpj = action.payload
     },
-    setInstId(state, action: PayloadAction<number>) {
+    setInstId(state, action: PayloadAction<number | null>) {
         state.id = action.payload
     },
     setInstType(state, action: PayloadAction<string>) {

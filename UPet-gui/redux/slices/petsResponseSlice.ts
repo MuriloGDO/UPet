@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { MatchingPet } from '../../app/utils/petsResponseInterface'
+import { MatchingPet } from '../../app/utils/ResponsesInterface'
 
 interface UiSlice {
   pets: MatchingPet[] 

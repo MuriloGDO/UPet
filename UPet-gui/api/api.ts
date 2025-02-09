@@ -62,7 +62,7 @@ export const systemApiService = {
                     description,
                     status: "Available",
                 },
-                photos: photo ? [ {photo} ] : [],
+                photos: photo ? photo.split(',').map((link) => ({ photo: link })) : [],
                 register: {
                     institution: institutionId,
                     date_of_registration: new Date().toISOString().split("T")[0]

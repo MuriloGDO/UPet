@@ -4,8 +4,8 @@ import { View, StyleSheet, Image, TouchableOpacity } from "react-native"
 import { useSelector } from "react-redux"
 import { RootState } from "../../redux/store"
 import { useDispatch } from "react-redux"
-import { setUserType } from "../../redux/slices/userInfoSlice"
-import { setInstType } from "../../redux/slices/institutionInfoSlice"
+import { setUserId, setUserType } from "../../redux/slices/userInfoSlice"
+import { setInstId, setInstType } from "../../redux/slices/institutionInfoSlice"
 import { setPetsResponse } from "../../redux/slices/petsResponseSlice"
 
 export const Footer = () =>{
@@ -30,6 +30,8 @@ export const Footer = () =>{
                     router.push('/')
                     dispatch(setUserType(''))
                     dispatch(setInstType(''))
+                    dispatch(setUserId(null))
+                    dispatch(setInstId(null))
                     dispatch(setPetsResponse([]))
                 }}>
                 <Image style={styles.images} source={require('../../assets/sair.png')} />

@@ -9,7 +9,7 @@ import { institutionStyles } from './styles/institution';
 import { InstitutionPetCard } from '../components/institutionPetCard';
 import { Footer } from '../components/footer';
 import { systemApiService } from '../api/api';
-import { MatchingPet } from './utils/petsResponseInterface';
+import { MatchingPet } from './utils/ResponsesInterface';
 import { setLoading } from '../redux/slices/uiSlice';
 
 SplashScreen.preventAutoHideAsync();

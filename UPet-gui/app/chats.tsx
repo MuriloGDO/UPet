@@ -9,15 +9,9 @@ import { ChatCard } from '../components/chatCard';
 import { systemApiService } from '../api/api';
 import { RootState } from '../redux/store';
 import { setLoading } from '../redux/slices/uiSlice';
+import { Chat } from './utils/ResponsesInterface';
 
 SplashScreen.preventAutoHideAsync();
-
-interface Chat{
-  id: string,
-  institution: number
-  name: string
-  user: number
-}
 
 export default function App() {
   const [chats, setChats] = useState<Chat[]>([])
@@ -59,13 +53,16 @@ export default function App() {
                   ()=>router.push({
                     pathname: `/${chat.name}/chat`,
                     params: {
-                      user_id: chat.user,
-                      inst_id: chat.institution,
+                      user_id: chat.user.id,
+                      inst_id: chat.institution.id,
+                      pet_id: chat.pet.id,
+                      institution_name: chat.institution.name,
+                      user_name: chat.user.name
                     },
                   })
                   }
             >
-              <ChatCard name={userType ? `Instituição ${chat.institution}` : `Usuário ${chat.user}`}/>
+              <ChatCard name={userType ? `${chat.pet.name}` : `${chat.user.name}`} image={userType ? `${chat.pet.photos[0].photo}` : `${chat.user.photo}`} petName={userType?undefined: chat.pet.name}/>
             </TouchableOpacity>
           )) }
         </ScrollView>
