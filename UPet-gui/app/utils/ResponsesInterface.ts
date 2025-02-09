@@ -3,7 +3,7 @@ interface Cluster {
     name: string;
   }
   
-interface PetPhoto {
+export interface PetPhoto {
   id: number;
   photo:string;
   uploaded_at: string;

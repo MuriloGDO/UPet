@@ -50,7 +50,7 @@ export const RegisterPetInput = () => {
   const photoArray = photo ? photo.split(',') : [];
   return (
     <>
-        <Text style={[sharedStyles.uPetText, sharedStyles.textContainerTitle]}>Cadastro</Text>
+        <Text style={[sharedStyles.uPetText, sharedStyles.textContainerTitle, {marginTop:80}]}>Cadastro</Text>
         <FlatList
           data={photoArray}
           horizontal

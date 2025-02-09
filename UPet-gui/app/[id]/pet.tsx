@@ -8,6 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { systemApiService } from '../../api/api';
 import { useDispatch } from 'react-redux';
 import { setLoading } from '../../redux/slices/uiSlice';
+import { PhotoSlider } from '../../components/PhotoSlider';
 
 export default function App() {
   const { id } = useLocalSearchParams();
@@ -33,13 +34,7 @@ export default function App() {
       <TouchableOpacity style={{marginLeft:30, alignSelf:'flex-start'}} onPress={()=>{router.push('/home')}}>
         <Text style={{fontSize:19, marginBottom:30}}>{'<'} Back</Text>
       </TouchableOpacity>
-      <PetCard 
-        marginRight={0}
-        width={350} 
-        percentage={pet?.percentage} 
-        name={pet?.name} 
-        image={pet?.photos[0]?.photo} 
-      />
+      <PhotoSlider photos={pet?.photos}/>
       <Text style={{ marginTop: 10, marginBottom: 30, fontSize: 22, fontWeight: '600' }}>Descrição:</Text>
       <View style={styles.shadowContainer}>
         <View style={styles.textWrapper}>
