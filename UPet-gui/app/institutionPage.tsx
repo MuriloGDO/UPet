@@ -61,7 +61,7 @@ export default function App() {
 
         <ScrollView style={styles.scrollContainer}>
           {pets ? pets.map((pet) => (
-                <InstitutionPetCard key={pet.id} name={pet.name} image={pet.photos[0] ? pet.photos[0].photo : undefined}/>
+                <InstitutionPetCard key={pet.id} name={pet.name} image={pet.photos[0] ? pet.photos[0].photo : undefined} adotado={pet.status == "Available" ? false : true}/>
           )) : undefined}
         </ScrollView>
       </View>

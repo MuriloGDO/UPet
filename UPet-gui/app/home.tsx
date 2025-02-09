@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { setLoading } from '../redux/slices/uiSlice';
 import SearchBar from '../components/searchBar/searchBar';
 import { setPetsResponse } from '../redux/slices/petsResponseSlice';
-
+import { Picker } from '@react-native-picker/picker';
 
 export default function App() {
   const name = useSelector((state: RootState) => state.userInfo.name)
@@ -18,31 +18,52 @@ export default function App() {
   const userType = useSelector((state: RootState) => state.userInfo.user_type)
   const user_id = useSelector((state: RootState) => state.userInfo.id)
   const petsResponse = useSelector((state: RootState) => state.petsSlice.pets)
-  
 
   const router = useRouter()
-
   const dispatch = useDispatch()
 
-  const selectedButton = ['gray', 'white']
-  const notSelectedButton = ['white', 'black']
+  const [selectedValue, setSelectedValue] = useState("-");
+  const [filteredPets, setFilteredPets] = useState(petsResponse); // Estado para pets filtrados
+  const [isPickerVisible, setIsPickerVisible] = useState(false);  // Estado para controlar a visibilidade do Picker
 
   const getPetMatches = async () =>{
     dispatch(setLoading(true))
     const response =  await systemApiService.getMatchingPets(user_id)
-    dispatch(setPetsResponse(response.matching_pets))
+    dispatch(setPetsResponse(response.matching_pets.filter(pet => pet.status === "Available")));
     dispatch(setLoading(false))
   }
 
   useEffect(() => {
     if (userType !== 'user') {
       router.replace('/');
-      Alert.alert("Voce nao tem acesso a área de usuários.")
+      Alert.alert("Você não tem acesso a área de usuários.")
     }
-    else if(petsResponse.length == 0){
+    else if(petsResponse.length === 0){
       getPetMatches()
     }
-  }, [userType, router]);
+  }, []);
+
+  useEffect(() => {
+    setFilteredPets(petsResponse); // Atualiza o estado de pets filtrados sempre que petsResponse mudar
+  }, [petsResponse]);
+
+  const handleFilterChange = (address: string) => {
+    setSelectedValue(address);
+    if(address != "-"){
+      setFilteredPets(petsResponse.filter(pet => pet.institution?.address === address));
+    }
+  };
+
+  const clearFilter = () => {
+    setSelectedValue("1");
+    setFilteredPets(petsResponse); // Restaura os pets ao estado original
+  };
+
+  // Filtra os endereços para garantir que não haja repetidos
+  const uniqueAddresses = Array.from(new Set(petsResponse
+    .map((pet) => pet.institution?.address)
+    .filter((address) => address !== undefined)
+  ));
 
   if(userType !== 'user'){
     return (
@@ -69,10 +90,36 @@ export default function App() {
             </TouchableOpacity>
         </View>
         <View style={{alignContent:'center' , marginBottom:30, justifyContent:'space-between', width:'90%', alignSelf:'center'}}>
-          <Text style={{fontSize:19}}>Perfeitos para voce:</Text>
+          <Text style={{fontSize:19}}>Perfeitos para você:</Text>
+          
+          <TouchableOpacity onPress={() => setIsPickerVisible(!isPickerVisible)}>
+            <Text style={{fontSize: 18, color: 'blue'}}>Filtrar por localizaçao</Text>
+          </TouchableOpacity>
+          {isPickerVisible && (
+            <View style={{flexDirection: 'column', alignItems: 'flex-start', marginTop: 10}}>
+              <Picker  
+                selectedValue={selectedValue}
+                onValueChange={(itemValue) => handleFilterChange(itemValue)} 
+                style={{width: '100%', height: 150 }}>
+                  <Picker.Item 
+                    value={"-"} 
+                    label={"-"} 
+                  />
+                {uniqueAddresses.map((address, index) => (
+                  <Picker.Item 
+                    key={index}
+                    value={address} 
+                    label={address} 
+                  />
+                ))}
+              </Picker>
+              <TouchableOpacity onPress={clearFilter} style={{marginTop: 10, padding: 5, backgroundColor: 'gray', borderRadius: 5}}>
+                <Text style={{color: 'white', fontSize: 14}}>Limpar</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
-        <PetSlider pets={petsResponse}></PetSlider>
-        
+        <PetSlider pets={filteredPets}></PetSlider>
     </View>
     <Footer></Footer>
     </>

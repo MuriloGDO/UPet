@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { systemApiService } from '../../api/api';
 import { setLoading } from '../../redux/slices/uiSlice';
 import { RootState } from '../../redux/store';
+import { sharedStyles } from '../styles/sharedStyle';
 
 interface IMessage{
     content: string
@@ -37,6 +38,13 @@ export default function ChatScreen() {
     dispatch(setLoading(false));
   };
 
+  const adoptPet = async () => {
+    dispatch(setLoading(true))
+    await systemApiService.adoptPet(user_id, pet_id)
+    dispatch(setLoading(false))
+    router.push('/chats')
+  }
+
   useEffect(() => {
     getChatHistory();
     const socket = new WebSocket(WS_URL);
@@ -68,9 +76,20 @@ export default function ChatScreen() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={()=> router.push('/chats')}>
-        <Text style={{marginLeft:15, fontSize:18, marginBottom:5}}>{"< Voltar"}</Text>
-      </TouchableOpacity>
+      <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginTop:15}}>
+        <TouchableOpacity onPress={()=> router.push('/chats')}>
+          <Text style={{marginLeft:15, fontSize:18, marginBottom:5}}>{"< Voltar"}</Text>
+        </TouchableOpacity>
+        {
+          !userType
+          ?
+          <TouchableOpacity style={{padding:5, backgroundColor:"#02778E", justifyContent:'center', alignItems:'center', borderRadius:20}} onPress={()=> adoptPet()}>
+            <Text style={{fontSize:18,color:"white", alignSelf:'center'}}>Adotado</Text>
+          </TouchableOpacity>
+          :
+          undefined
+        }
+      </View>
       <View style={{justifyContent:"center", alignItems:"center", marginBottom:10}}>
         <Text style={{fontSize:20}}>{userType ? institution_name : user_name}</Text>
       </View>

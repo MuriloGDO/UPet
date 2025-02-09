@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
 
-export const ChatCard = (props: { name?: string; image?: string, petName?:string }) => {
+export const ChatCard = (props: { name?: string; image?: string, petName?:string, adotado?: boolean }) => {
   return (
     <View style={styles.cardStyle}>
       <Image
@@ -15,6 +15,11 @@ export const ChatCard = (props: { name?: string; image?: string, petName?:string
         <Text style={styles.petTextStyle}>Pet: {props.petName}</Text>
         :
         undefined  
+        }
+        {props.adotado?
+        <Text style={[styles.petTextStyle, {color:'green'}]}>Pet Adotado!</Text>
+        :
+        undefined
         }
       </View>
     </View>

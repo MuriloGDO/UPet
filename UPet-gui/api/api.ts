@@ -200,7 +200,18 @@ export const systemApiService = {
             const response = await api.get(
                 `/chat/history/${chatRoom}/`
               );
-          return response.data;
+            return response.data;
+        } catch (err) {
+          const error = err as ErrorResponse;
+          Alert.alert(error.response.data.error);
+        }
+    },
+    adoptPet: async (userId: string | string[], petId: string | string[]) => {
+        try {
+          const response = await api.post(
+            `/adopt/`, {user_id: userId, pet_id: petId}
+          );
+          Alert.alert("Pet adotado com sucesso!");
         } catch (err) {
           const error = err as ErrorResponse;
           Alert.alert(error.response.data.error);

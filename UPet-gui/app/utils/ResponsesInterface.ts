@@ -10,7 +10,7 @@ interface PetPhoto {
 }
 
 interface Institution {
-  adress: number;
+  address: number;
   email:string;
   id: number;
   name: string;
