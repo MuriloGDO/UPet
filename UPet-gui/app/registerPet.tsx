@@ -52,7 +52,7 @@ export default function DescriptionScreen() {
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
     >
-      <View style={sharedStyles.textContainer}>
+      <View style={sharedStyles.textContainerPet}>
       <RegisterPetInput />
       </View>
 
