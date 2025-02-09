@@ -17,12 +17,12 @@ class Chat_rooms(ListAPIView):
         institution_id = self.request.query_params.get("institution_id")
 
         if user_id != None:
-            user_id = int(user_id)  # Converte para inteiro
+            user_id = int(user_id) 
             queryset = queryset.filter(user_id=user_id)
             return queryset
 
         if pet_id != None:
-            pet_id = int(pet_id)  # Converte para inteiro
+            pet_id = int(pet_id)  
             queryset = queryset.filter(pet_id=pet_id)
             return queryset
         
