@@ -45,12 +45,13 @@ const styles = StyleSheet.create({
       position: "absolute",
       bottom:0,
       justifyContent: 'space-around',
-      height: 100,
+      height: 90,
       width:'100%',
       display:"flex",
       flexDirection:"row",
       alignItems:"center",
-      padding: 10
+      padding: 10,
+      backgroundColor:'white',
     },
     images: {
         width:30,

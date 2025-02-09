@@ -62,7 +62,14 @@ export default function App() {
                   })
                   }
             >
-              <ChatCard name={userType ? `${chat.pet.name}` : `${chat.user.name}`} image={userType ? `${chat.pet.photos[0].photo}` : `${chat.user.photo}`} petName={userType?undefined: chat.pet.name} adotado={chat.pet.status == "Available" ? false : true}/>
+              <ChatCard 
+                name={userType ? `${chat.pet?.name}` : `${chat.user?.name}`} 
+                image={userType 
+                  ? chat.pet?.photos?.[0]?.photo 
+                  : chat.user?.photo} 
+                petName={userType ? undefined : chat.pet?.name} 
+                adotado={chat.pet?.status === "Available" ? false : true}
+              />
             </TouchableOpacity>
           )) }
         </ScrollView>
