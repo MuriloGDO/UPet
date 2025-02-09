@@ -1,7 +1,7 @@
 from rest_framework import routers
 
 from core.api.views.List_pet_by_institution import List_pets_by_institution
-from .views import Users_view_set, Clusters_view_set, Intitution_view_set, Users_register, Login_view, Login_view_set, Users_delete, Users_update, Users_information, Pets_register, Institution_delete, Institution_update, Pets_update, Institution_register, Users_search_pets, Institution_information, Institution_search_by_filters, Pets_delete, Institution_count_pets, Pets_search_by_filters
+from .views import Users_view_set, Clusters_view_set, Intitution_view_set, Users_register, Login_view, Login_view_set, Users_delete, Users_update, Users_information, Pets_register, Institution_delete, Institution_update, Pets_update, Institution_register, Users_search_pets, Institution_information, Institution_search_by_filters, Pets_delete, Institution_count_pets, Pets_search_by_filters, Adopted_pets
 from django.urls import path, include
 
 router = routers.DefaultRouter()
@@ -29,4 +29,5 @@ urlpatterns = [
     path('institution_search_by_filters/', Institution_search_by_filters.as_view(), name='institution-search-by-filters'),
     path('institution_count_pets/', Institution_count_pets.as_view(), name='Institution-count-pets'),
     path('institution_list_pets/', List_pets_by_institution.as_view(), name='Institution List Pets'),
+    path("adoption/adopted_pets/", Adopted_pets.as_view(), name="adopted_pets"),
 ]
