@@ -8,7 +8,7 @@ export const PetSlider = (props: {pets: MatchingPet[]}) => {
   const router = useRouter()
 
     return(
-        <ScrollView horizontal style={{display:"flex", flexDirection:"row", marginRight:10, marginLeft:10}}>
+        <ScrollView horizontal style={{display:"flex", flexDirection:"row", marginRight:10, marginLeft:10, marginBottom:60}}>
                 {props.pets.map((pet) => (
                     <TouchableOpacity
                         key={pet.id}

@@ -98,9 +98,9 @@ export default function ChatScreen() {
           <View key={index} style={[styles.message, { backgroundColor: userType ? msg.user ? 'green' : 'gray' : msg.user ? 'gray' : 'green'}]}>
             {
                 userType ?
-                <Text style={styles.user}>{msg.pet ? institution_name : 'Voce'}:</Text>
+                <Text style={styles.user}>{msg.user ? "Voce" : institution_name}:</Text>
                 :
-                <Text style={styles.user}>{msg.pet ? 'Voce' : user_name}:</Text>
+                <Text style={styles.user}>{msg.user ? user_name : "Voce"}:</Text>
             }
             <Text style={styles.text}>{msg.content}</Text>
           </View>
