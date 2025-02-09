@@ -54,6 +54,7 @@ export const sharedStyles = StyleSheet.create({
       marginTop: 20,
       marginBottom: 30,
       alignItems: 'center',
+      width: '100%'
     },
     blue:{
       backgroundColor:'#02778E',
@@ -65,5 +66,10 @@ export const sharedStyles = StyleSheet.create({
     inputLabels: {
       alignSelf:'flex-start',
       marginTop: 5,
+    },
+    textContainerTitle: {
+      marginTop: 20,
+      marginBottom: 30,
+      alignItems: 'center',
     }
   });
