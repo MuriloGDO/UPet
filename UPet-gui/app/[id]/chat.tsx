@@ -17,7 +17,7 @@ interface IMessage{
 
 export default function ChatScreen() {
   const { id, user_id, pet_id, institution_name, user_name } = useLocalSearchParams();   
-  const WS_URL = `ws://127.0.0.1:8000/ws/chat/${id}/`;
+  const WS_URL = `ws://98.81.110.30:80/ws/chat/${id}/`;
   const dispatch = useDispatch();
 
   const [messages, setMessages] = useState<IMessage[]>([]);

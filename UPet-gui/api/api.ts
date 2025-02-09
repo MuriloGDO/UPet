@@ -3,7 +3,7 @@ import { Alert } from 'react-native'
 import { setLoading } from '../redux/slices/uiSlice';
 import { useDispatch } from 'react-redux';
 
-export const baseUrl = 'http://127.0.0.1:8000/'
+export const baseUrl = 'http://98.81.110.30:80/'
 export const api = axios.create({
   baseURL: `${baseUrl}api/`,
 })
