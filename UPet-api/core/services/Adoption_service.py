@@ -1,5 +1,5 @@
 from datetime import datetime
-from ..models.Adoption import Adoption,Pets
+from ..models.Adoption import Adoption
 
 class Adoption_service:
     @staticmethod
@@ -28,7 +28,8 @@ class Adoption_service:
     def get_adopted_pets_by_institution(institution_id):
         """Retorna os pets adotados que pertenciam a uma instituição específica."""
         try:
-            adopted_pets = Adoption.objects.filter(pet__institution_id=institution_id).select_related('pet')
+            # 🔥 Consulta correta: Busca diretamente pelo campo `institution` em `Adoption`
+            adopted_pets = Adoption.objects.filter(institution_id=institution_id).select_related('pet')
 
             if not adopted_pets.exists():
                 return {"message": "Nenhum pet foi adotado desta instituição."}

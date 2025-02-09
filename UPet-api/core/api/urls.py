@@ -30,5 +30,5 @@ urlpatterns = [
     path('institution_count_pets/', Institution_count_pets.as_view(), name='Institution-count-pets'),
     path('institution_list_pets/', List_pets_by_institution.as_view(), name='Institution List Pets'),
     path('adopt/', Adopt_pet.as_view(), name='adopt-pet'),
-    path("adoption/adopted_pets/", Adopted_pets.as_view(), name="adopted_pets"),
+    path("adopted_pets/", Adopted_pets.as_view(), name="adopted_pets"),
 ]
