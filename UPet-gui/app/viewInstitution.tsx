@@ -68,7 +68,7 @@ export default function InstitutionProfile() {
 
             {/* Pets da Instituição */}
             <Text style={homeInstitutionsStyle.sectionTitle}>Pets da {name}:</Text>
-            <PetSlider pets={petsResponse}></PetSlider>
+            <PetSlider pets={petsResponse} marginBottom={70}></PetSlider>
           </>
         )}
       </ScrollView>

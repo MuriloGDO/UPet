@@ -46,7 +46,7 @@ export default function App() {
         <View style={institutionStyles.hr} />
 
         <ScrollView style={styles.scrollContainer}>
-          {chats.map((chat) => (
+          {chats?.map((chat) => (
             <TouchableOpacity
                 key={chat.name}
                 onPress={
