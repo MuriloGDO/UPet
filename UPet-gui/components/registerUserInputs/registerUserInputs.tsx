@@ -113,6 +113,8 @@ export const RegisterUserInput2 = () => {
           value={description}
           placeholder='Descriçao'
           onChangeText={(description)=> dispatch(setDescription(description))}
+          multiline={true}
+          scrollEnabled={true}
         />
     </>
   );
