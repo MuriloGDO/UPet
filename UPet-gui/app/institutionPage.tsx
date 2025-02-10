@@ -59,11 +59,38 @@ export default function App() {
 
         <View style={institutionStyles.hr} />
 
+        <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 20, marginBottom: 10, color: '#333',}}>Pets para adoção</Text>
         <ScrollView style={styles.scrollContainer}>
-          {pets ? pets.map((pet) => (
-                <InstitutionPetCard key={pet.id} name={pet.name} image={pet.photos[0] ? pet.photos[0].photo : undefined} adotado={pet.status == "Available" ? false : true}/>
-          )) : undefined}
+        {pets ?.filter((pet) => pet.status == "Available") // Filtra apenas os adotados
+                .map((pet) => (
+                  <InstitutionPetCard
+                    key={pet.id}
+                    name={pet.name}
+                    image={pet.photos[0] ? pet.photos[0].photo : undefined}
+                    adotado={false} 
+                    />
+                ))}
         </ScrollView>
+
+        <View style={{height: 1, // Altura da linha
+                      backgroundColor: '#ccc', // Cor do separador (cinza claro)
+                      marginVertical: 10, // Espaçamento acima e abaixo da linha
+                      width: '100%', // Largura total da tela}} /> {/* Separador */}
+                    }}/>
+
+        <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 20, marginBottom: 10, color: '#333',}}>Pets já adotados</Text>
+        <ScrollView style={styles.scrollContainer}>
+          {pets ?.filter((pet) => pet.status !== "Available") // Filtra apenas os adotados
+                .map((pet) => (
+                  <InstitutionPetCard
+                    key={pet.id}
+                    name={pet.name}
+                    image={pet.photos[0] ? pet.photos[0].photo : undefined}
+                    adotado={true} // Sempre true porque já filtramos os adotados
+                    />
+                ))}
+          </ScrollView>
+
       </View>
       <Footer></Footer>
     </>
@@ -76,3 +103,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 10, 
   },
 });
+
